@@ -1,6 +1,6 @@
 import { Mars, Venus, BabyIcon } from "lucide-react";
 
-export const BASE_URL = "http://localhost:3000/api";
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const banners = [
     "https://authentic-shoes.com/wp-content/uploads/2024/09/20240904091932-1.webp",
