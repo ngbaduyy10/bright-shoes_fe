@@ -47,10 +47,12 @@ const ShopNavbar = () => {
                             <p>CONTACT</p>
                             <hr className="w-1/2 border-foreground border hidden"/>
                         </NavLink>
-                        <NavLink to="/account" className="text-lg font-medium navbar-link text-foreground">
-                            <p>ACCOUNT</p>
-                            <hr className="w-1/2 border-foreground border hidden"/>
-                        </NavLink>
+                        {isSignedIn && (
+                            <NavLink to="/account" className="text-lg font-medium navbar-link text-foreground">
+                                <p>ACCOUNT</p>
+                                <hr className="w-1/2 border-foreground border hidden"/>
+                            </NavLink>
+                        )}
                     </div>
 
                     <div className="flex items-center gap-4 md:hidden">
@@ -89,13 +91,16 @@ const ShopNavbar = () => {
                                         <Contact/>
                                         <Label className="text-lg font-medium cursor-pointer">Contact</Label>
                                     </div>
-                                    <div className="navbar-sheet" onClick={() => navigate("/account")}>
-                                        <MessageCirclePlus />
-                                        <Label className="text-lg font-medium cursor-pointer">Account</Label>
-                                    </div>
+                                    {isSignedIn && (
+                                        <div className="navbar-sheet" onClick={() => navigate("/account")}>
+                                            <MessageCirclePlus/>
+                                            <Label className="text-lg font-medium cursor-pointer">Account</Label>
+                                        </div>
+                                    )}
 
                                     {!isSignedIn && (
-                                        <Button className="mx-4 cursor-pointer" onClick={() => navigate("/login")}>Sign In</Button>
+                                        <Button className="mx-4 cursor-pointer" onClick={() => navigate("/login")}>Sign
+                                            In</Button>
                                     )}
                                 </div>
                             </SheetContent>

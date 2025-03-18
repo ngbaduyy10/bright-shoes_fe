@@ -67,7 +67,8 @@ const Address = () => {
 
     return (
         <>
-            <div className="flex flex-col gap-4 w-full mt-5">
+            <div className="flex flex-col gap-4 w-full mt-4">
+                <div className="text-2xl font-semibold text-black">Shipping Address</div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-2">
                     {addressList.map((address) => (
                         <AddressCard

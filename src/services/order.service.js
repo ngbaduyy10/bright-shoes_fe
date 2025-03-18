@@ -14,7 +14,7 @@ export const createOrder = async (data) => {
     return response.data;
 }
 
-export const getOrders = async (userId) => {
+export const getOrdersByUserId = async (userId) => {
     const response = await axios.get(`${BASE_URL}/order/${userId}`);
     return response.data;
 }
