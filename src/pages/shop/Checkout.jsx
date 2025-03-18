@@ -20,6 +20,7 @@ const Checkout = () => {
     const [addressList, setAddressList] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchAddress = async () => {
@@ -35,6 +36,7 @@ const Checkout = () => {
     }, [user]);
 
     const handleOrder = async () => {
+        setLoading(true);
         const data = {
             userId: user.id,
             addressId: selectedAddress.id,
@@ -51,6 +53,7 @@ const Checkout = () => {
         } else {
             toast.error(response.message);
         }
+        setLoading(false);
     }
 
     return (
@@ -100,7 +103,7 @@ const Checkout = () => {
                                 <Button variant="outline" className="h-[50px] cursor-pointer">Cash on Delivery</Button>
                             </div>
                         </div>
-                        <Button className="w-full mt-2 cursor-pointer" onClick={handleOrder}>
+                        <Button className="w-full mt-2 cursor-pointer" onClick={handleOrder} disabled={loading}>
                             Place Order
                         </Button>
                     </div>
