@@ -7,6 +7,7 @@ import Register from "@/pages/shop/Register.jsx";
 import Detail from "@/pages/shop/Detail.jsx";
 import Checkout from "@/pages/shop/Checkout.jsx";
 import Account from "@/pages/shop/Account.jsx";
+import PaymentSuccess from "@/pages/shop/PaymentSuccess.jsx";
 
 const routes = [
     {
@@ -35,6 +36,10 @@ const routes = [
             {
                 path: "/checkout",
                 element: <Checkout />
+            },
+            {
+                path: "/payment-success",
+                element: <PaymentSuccess />
             },
             {
                 path: "/login",

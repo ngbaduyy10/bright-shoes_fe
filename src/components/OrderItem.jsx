@@ -10,7 +10,7 @@ const OrderItem = ({ item }) => {
             />
             <div className="flex-1">
                 <div className="flex justify-between items-center">
-                    <h3 className="font-semibold">{item.name}</h3>
+                    <h3 className="font-semibold leading-none">{item.name}</h3>
                     <p className="font-semibold">
                         ${((item.salePrice > 0 ? item.salePrice : item.price) * item?.quantity).toFixed(1)}
                     </p>
