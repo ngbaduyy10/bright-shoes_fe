@@ -64,7 +64,7 @@ const Detail = () => {
                     <div>
                         <div className="flex items-start justify-between">
                             <h1 className="text-2xl font-extrabold text-black">{item?.name}</h1>
-                            <Bookmark size={30} className="bg-primary" />
+                            {/*<Bookmark size={30} className="bg-primary" />*/}
                         </div>
                         <p className="text-muted-foreground text-lg mb-5 mt-4 text-justify">
                             {item?.description}

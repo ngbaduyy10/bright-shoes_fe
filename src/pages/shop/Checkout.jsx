@@ -7,10 +7,15 @@ import {getAddress} from "@/services/address.service.js";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import SelectAddressDialog from "@/components/SelectAddressDialog.jsx";
+import {createOrder} from "@/services/order.service.js";
+import {toast} from "sonner";
+import {useDispatch} from "react-redux";
+import {clearCartSlice} from "@/store/cartSlice.js";
 
 const Checkout = () => {
     const { user } = useUser();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { cartItems, totalPrice } = useSelector((state) => state.cart);
     const [addressList, setAddressList] = useState([]);
     const [selectedAddress, setSelectedAddress] = useState(null);
@@ -28,6 +33,25 @@ const Checkout = () => {
             fetchAddress();
         }
     }, [user]);
+
+    const handleOrder = async () => {
+        const data = {
+            userId: user.id,
+            addressId: selectedAddress.id,
+            items: cartItems,
+            paymentMethod: "cod",
+            totalPrice: totalPrice
+        }
+
+        const response = await createOrder(data);
+        if (response.success) {
+            await dispatch(clearCartSlice(user.id));
+            navigate("/payment-success");
+            toast.success(response.message);
+        } else {
+            toast.error(response.message);
+        }
+    }
 
     return (
         <>
@@ -76,7 +100,7 @@ const Checkout = () => {
                                 <Button variant="outline" className="h-[50px] cursor-pointer">Cash on Delivery</Button>
                             </div>
                         </div>
-                        <Button className="w-full mt-2 cursor-pointer">
+                        <Button className="w-full mt-2 cursor-pointer" onClick={handleOrder}>
                             Place Order
                         </Button>
                     </div>
