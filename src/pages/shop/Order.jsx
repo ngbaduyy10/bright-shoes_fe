@@ -11,16 +11,16 @@ const Order = () => {
     const [orderList, setOrderList] = useState([]);
 
     useEffect(() => {
-        const fetchOrderList = async () => {
-            const response = await getOrdersByUserId(user.id);
-            if (response.success) {
-                setOrderList(response.data);
-            }
-        }
-
-        if (user) {
-            fetchOrderList();
-        }
+        // const fetchOrderList = async () => {
+        //     const response = await getOrdersByUserId(user.id);
+        //     if (response.success) {
+        //         setOrderList(response.data);
+        //     }
+        // }
+        //
+        // if (user) {
+        //     fetchOrderList();
+        // }
     }, [user]);
 
     return (

@@ -23,16 +23,16 @@ const Checkout = () => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const fetchAddress = async () => {
-            const response = await getAddress(user.id);
-            if (response.success) {
-                setAddressList(response.data);
-            }
-        }
-
-        if (user) {
-            fetchAddress();
-        }
+        // const fetchAddress = async () => {
+        //     const response = await getAddress(user.id);
+        //     if (response.success) {
+        //         setAddressList(response.data);
+        //     }
+        // }
+        //
+        // if (user) {
+        //     fetchAddress();
+        // }
     }, [user]);
 
     const handleOrder = async () => {

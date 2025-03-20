@@ -31,7 +31,7 @@ const CartItem = ({ item }) => {
     return (
         <div className="flex space-x-4">
             <img
-                src={item.image}
+                src={item.image_url}
                 alt={item.name}
                 className="w-20 h-20 rounded object-cover"
             />

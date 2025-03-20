@@ -14,16 +14,16 @@ const Address = () => {
     const [reload, setReload] = useState(false);
 
     useEffect(() => {
-        const fetchAddress = async () => {
-            const response = await getAddress(user.id);
-            if (response.success) {
-                setAddressList(response.data);
-            }
-        }
-
-        if (user) {
-            fetchAddress();
-        }
+        // const fetchAddress = async () => {
+        //     const response = await getAddress(user.id);
+        //     if (response.success) {
+        //         setAddressList(response.data);
+        //     }
+        // }
+        //
+        // if (user) {
+        //     fetchAddress();
+        // }
     }, [user, reload]);
 
     const handleEditButton = (address) => {

@@ -53,7 +53,7 @@ const Detail = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-12 max-w-[90vw] md:max-w-[95vw] lg:max-w-[85vw] xl:max-w-[70vw]">
                 <div className="relative overflow-hidden rounded-lg">
                     <img
-                        src={item?.image}
+                        src={item?.image_url}
                         alt={item?.name}
                         width={600}
                         height={600}
@@ -101,7 +101,7 @@ const Detail = () => {
                         ))}
                     </div>
                     <div className="mt-5 mb-5">
-                        {item?.totalStock === 0 ? (
+                        {item?.quantity === 0 ? (
                             <Button className="w-full opacity-60 cursor-not-allowed">
                                 Out of Stock
                             </Button>
