@@ -81,4 +81,13 @@ export const categoriesIcon = [
     { id: "kids", label: "Kids", icon: BabyIcon },
 ];
 
-export const shoesSize = [ "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11"];
+export const paymentToString = (paymentMethod) => {
+    switch (paymentMethod) {
+        case "stripe":
+            return "Stripe";
+        case "cod":
+            return "Cash on Delivery";
+        default:
+            return "Unknown";
+    }
+}

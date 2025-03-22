@@ -6,9 +6,9 @@ import {Button} from "@/components/ui/button";
 const SelectAddressDialog = ({ open, setOpen, addressList, selectedAddress, setSelectedAddress }) => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent>
+            <DialogContent className="sm:max-w-[600px] lg:max-w-[800px]">
                 <div className="text-xl font-semibold">Select Address</div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                     {addressList.map((address) => (
                         <AddressCard
                             key={address.id}
