@@ -9,9 +9,9 @@ const Account = () => {
             <div className="flex flex-col rounded-lg border bg-background p-6 shadow-sm">
                 <Tabs defaultValue="order">
                     <TabsList className="bg-primary">
-                        <TabsTrigger value="order" className="cursor-pointer text-white">ORDER</TabsTrigger>
-                        <TabsTrigger value="address" className="cursor-pointer text-white">ADDRESS</TabsTrigger>
-                        <TabsTrigger value="wishlist" className="cursor-pointer text-white">WISHLIST</TabsTrigger>
+                        <TabsTrigger value="order" className="cursor-pointer text-white w-[110px]">ORDER</TabsTrigger>
+                        <TabsTrigger value="address" className="cursor-pointer text-white w-[110px]">ADDRESS</TabsTrigger>
+                        <TabsTrigger value="wishlist" className="cursor-pointer text-white w-[110px]">WISHLIST</TabsTrigger>
                     </TabsList>
                     <TabsContent value="order">
                         <Order />

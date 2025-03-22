@@ -1,4 +1,5 @@
 import {Button} from "@/components/ui/button.jsx";
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.jsx";
 import {useEffect, useState} from "react";
 import AddressDialog from "@/components/AddressDialog.jsx";
 import {useUser} from "@clerk/clerk-react";
@@ -14,16 +15,16 @@ const Address = () => {
     const [reload, setReload] = useState(false);
 
     useEffect(() => {
-        // const fetchAddress = async () => {
-        //     const response = await getAddress(user.id);
-        //     if (response.success) {
-        //         setAddressList(response.data);
-        //     }
-        // }
-        //
-        // if (user) {
-        //     fetchAddress();
-        // }
+        const fetchAddress = async () => {
+            const response = await getAddress(user.id);
+            if (response.success) {
+                setAddressList(response.data);
+            }
+        }
+
+        if (user) {
+            fetchAddress();
+        }
     }, [user, reload]);
 
     const handleEditButton = (address) => {
@@ -67,26 +68,36 @@ const Address = () => {
 
     return (
         <>
-            <div className="flex flex-col gap-4 w-full mt-4">
-                <div className="text-2xl font-semibold text-black">Shipping Address</div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-2">
-                    {addressList.map((address) => (
-                        <AddressCard
-                            key={address.id}
-                            address={address}
-                            handleEdit={handleEditButton}
-                            handleDelete={handleDeleteAddress}
-                        />
-                    ))}
-                </div>
-                <Button
-                    className="w-[200px] cursor-pointer"
-                    onClick={() => setDialogOpen(true)}
-                    disabled={addressList.length >= 3}
-                >
-                    Add New Address
-                </Button>
-            </div>
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-2xl">Shipping Address</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    {addressList.length === 0 ? (
+                        <div className="text-lg text-gray-500">You have no saved address. Please add your address</div>
+                    ) : (
+                        <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-2">
+                            {addressList.map((address) => (
+                                <AddressCard
+                                    key={address.id}
+                                    address={address}
+                                    handleEdit={handleEditButton}
+                                    handleDelete={handleDeleteAddress}
+                                />
+                            ))}
+                        </div>
+                    )}
+
+                    <Button
+                        className="w-[200px] cursor-pointer mt-3"
+                        onClick={() => setDialogOpen(true)}
+                        disabled={addressList.length >= 3}
+                    >
+                        Add New Address
+                    </Button>
+                </CardContent>
+            </Card>
+
             <AddressDialog
                 open={dialogOpen}
                 setOpen={setDialogOpen}

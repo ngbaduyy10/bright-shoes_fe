@@ -12,11 +12,11 @@ function AddressCard({ address, handleEdit, handleDelete, setSelectedAddress, ac
         >
             <CardContent className="grid p-4 gap-4">
                 <Label>Street: {address?.street}</Label>
+                <Label>Ward: {address?.ward}</Label>
+                <Label>District: {address?.district}</Label>
                 <Label>City: {address?.city}</Label>
-                <Label>State: {address?.state}</Label>
                 <Label>Country: {address?.country}</Label>
-                <Label>Zip Code: {address?.zip_code}</Label>
-                <Label>Phone: {address?.phone_number}</Label>
+                <Label>Phone: {address?.phone}</Label>
             </CardContent>
             <CardFooter className="pr-3 pb-3 flex justify-end gap-1">
                 {handleEdit && handleDelete ? (

@@ -22,23 +22,23 @@ const AddressDialog = ({ open, setOpen, formData, setFormData, handleAddAddress,
                 <div className="flex items-center gap-2">
                     <Input
                         type="text"
-                        value={formData?.city}
-                        placeholder="City"
-                        onChange={(event) => setFormData({...formData, city: event.target.value})}
+                        value={formData?.ward}
+                        placeholder="Ward"
+                        onChange={(event) => setFormData({...formData, ward: event.target.value})}
                     />
                     <Input
                         type="text"
-                        value={formData?.state}
-                        placeholder="State"
-                        onChange={(event) => setFormData({...formData, state: event.target.value})}
+                        value={formData?.district}
+                        placeholder="District"
+                        onChange={(event) => setFormData({...formData, district: event.target.value})}
                     />
                 </div>
                 <div className="flex items-center gap-2">
                     <Input
                         type="text"
-                        value={formData?.zip_code}
-                        placeholder="Zip Code"
-                        onChange={(event) => setFormData({...formData, zip_code: event.target.value})}
+                        value={formData?.city}
+                        placeholder="City"
+                        onChange={(event) => setFormData({...formData, city: event.target.value})}
                     />
                     <Input
                         type="text"
@@ -49,9 +49,9 @@ const AddressDialog = ({ open, setOpen, formData, setFormData, handleAddAddress,
                 </div>
                 <Input
                     type="text"
-                    value={formData?.phone_number}
+                    value={formData?.phone}
                     placeholder="Phone Number"
-                    onChange={(event) => setFormData({...formData, phone_number: event.target.value})}
+                    onChange={(event) => setFormData({...formData, phone: event.target.value})}
                 />
                 <div className="flex items-center justify-end gap-1">
                     <Button variant="outline" className="cursor-pointer" onClick={handleCloseDialog}>Cancel</Button>
