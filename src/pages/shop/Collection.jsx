@@ -2,18 +2,29 @@ import { Button } from '../../components/ui/button.jsx';
 import { Checkbox } from '../../components/ui/checkbox.jsx';
 import { Label } from '../../components/ui/label.jsx';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../../components/ui/dropdown-menu.jsx';
-import {brandOptions, categoryOptions, sortOptions} from "@/utils/index.js";
+import {brandOptions, capitalizeFirstLetter, sortOptions} from "@/utils/index.js";
 import {ArrowUpDownIcon, RotateCcw} from "lucide-react";
 import {useEffect, useState} from "react";
 import ItemCard from "@/components/ItemCard.jsx";
 import {Input} from "@/components/ui/input.jsx";
 import {getShoes} from "@/services/shoes.service.js";
+import {getCategories} from "@/services/category.service.js";
 
 const Collection = () => {
     const [sort, setSort] = useState("default");
     const [itemList, setItemList] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
 
     useEffect(() => {
+        const fetchCategories = async () => {
+            const response = await getCategories();
+            if (response.success) {
+                setCategoryList(response.data);
+            }
+        }
+
+        fetchCategories();
+
         const fetchShoes = async () => {
             const response = await getShoes();
             if (response.success) {
@@ -29,7 +40,7 @@ const Collection = () => {
                 <div className="w-full overflow-hidden">
                     <img
                         alt="Banner"
-                        src="https://authentic-shoes.com/wp-content/uploads/2024/12/Giay-Nau.webp"
+                        src="https://authentic-shoes.com/wp-content/uploads/2024/09/20240904091932-1.webp"
                         className="w-full object-cover object-center"
                     />
                 </div>
@@ -45,10 +56,10 @@ const Collection = () => {
                                 </Button>
                             </div>
                             <div className="flex flex-col gap-2">
-                                {categoryOptions.map((option) => (
-                                    <Label className="flex items-center gap-2 text-foreground" key={option.id}>
+                                {categoryList.map((category) => (
+                                    <Label className="flex items-center gap-2 text-foreground" key={category.id}>
                                         <Checkbox/>
-                                        {option.label}
+                                        {capitalizeFirstLetter(category.name)}
                                     </Label>
                                 ))}
                             </div>

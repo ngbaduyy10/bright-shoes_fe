@@ -1,13 +1,27 @@
 import {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button.jsx";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import {banners, itemList, categoriesIcon} from "@/utils/index.js";
+import {itemList, categoriesIcon} from "@/utils/index.js";
 import ItemCard from "@/components/ItemCard.jsx";
 import {Card, CardContent} from "@/components/ui/card.jsx";
+import {getFeatures} from "@/services/feature.service.js";
+import {useNavigate} from "react-router-dom";
 
 const Home = () => {
-    const [featureImages, setFeatureImages] = useState(banners);
+    const navigate = useNavigate();
+    const [featureImages, setFeatureImages] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
+
+    useEffect(() => {
+        const fetchFeatureImages = async () => {
+            const response = await getFeatures();
+            if (response.success) {
+                setFeatureImages(response.data);
+            }
+        }
+
+        fetchFeatureImages();
+    }, []);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -22,9 +36,10 @@ const Home = () => {
                 {featureImages.length > 0 && featureImages.map((slide, index) => (
                     <img
                         key={index}
-                        src={slide}
+                        src={slide.image_url}
                         alt={`slide-${index}`}
-                        className={`${index === currentSlide ? "opacity-100" : "hidden"} w-full object-cover`}
+                        className={`${index === currentSlide ? "block" : "hidden"} w-full object-cover cursor-pointer`}
+                        onClick={() => navigate(`/detail/${slide.shoes_id}`)}
                     />
                 ))}
                 <Button

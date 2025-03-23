@@ -3,16 +3,9 @@ import { Mars, Venus, BabyIcon } from "lucide-react";
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const banners = [
-    "https://authentic-shoes.com/wp-content/uploads/2024/09/20240904091932-1.webp",
     "https://authentic-shoes.com/wp-content/uploads/2024/10/20240926111113-0.webp",
     "https://authentic-shoes.com/wp-content/uploads/2024/12/Giay-Nau.webp",
     "https://authentic-shoes.com/wp-content/uploads/2024/01/AJ1_Yellow_Ochre_Release_DayPrim.webp"
-]
-
-export const categoryOptions = [
-    { id: "men", label: "Men" },
-    { id: "women", label: "Women" },
-    { id: "kids", label: "Kids" },
 ]
 
 export const brandOptions = [
@@ -90,4 +83,11 @@ export const paymentToString = (paymentMethod) => {
         default:
             return "Unknown";
     }
+}
+
+export const capitalizeFirstLetter = (string) => {
+    if (typeof string !== 'string' || string.length === 0) {
+        return string;
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
