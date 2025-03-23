@@ -10,7 +10,12 @@ function PaymentSuccess() {
             <CardHeader className="p-0">
                 <CardTitle className="text-4xl">Payment is successfully!</CardTitle>
             </CardHeader>
-            <Button className="cursor-pointer w-[200px]" onClick={() => navigate("/account")}>
+            <Button
+                className="cursor-pointer w-[200px]"
+                onClick={() => {
+                    sessionStorage.setItem("activeTab", "order");
+                    navigate("/account")
+                }}>
                 View Orders
             </Button>
         </Card>

@@ -82,7 +82,15 @@ const Checkout = () => {
                         ) : (
                             <>
                                 <div className="text-lg text-gray-500">No address found. Please create address</div>
-                                <Button className="cursor-pointer" onClick={() => navigate("/account")}>Add Address</Button>
+                                <Button
+                                    className="cursor-pointer"
+                                    onClick={() => {
+                                        sessionStorage.setItem("activeTab", "address");
+                                        navigate("/account")
+                                    }}
+                                >
+                                    Add Address
+                                </Button>
                             </>
                         )}
                     </div>
