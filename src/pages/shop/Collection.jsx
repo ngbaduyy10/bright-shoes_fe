@@ -73,10 +73,10 @@ const Collection = () => {
                     </div>
 
                     <div className="flex flex-col">
-                        <div className="flex-between mb-3">
-                            <div className="text-xl font-bold py-2">COLLECTIONS</div>
+                        <div className="flex items-center justify-end sm:justify-between mb-3">
+                            <div className="text-xl font-bold py-2 hidden sm:block">COLLECTIONS</div>
                             <div className="flex items-center gap-2">
-                                <Input type="text" placeholder="Search" className="md:w-[250px] lg:w-[400px]"/>
+                                <Input type="text" placeholder="Search" className="sm:w-[250px] lg:w-[400px]"/>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button
@@ -107,7 +107,7 @@ const Collection = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             {itemList.map((item) => (
                                 <ItemCard key={item.id} item={item} />
                             ))}

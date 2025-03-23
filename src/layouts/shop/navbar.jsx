@@ -29,12 +29,12 @@ const ShopNavbar = () => {
     return (
         <>
             <header className="navbar-header">
-                <div className="flex-between px-4 py-5">
+                <div className="flex items-start justify-between px-4 py-5">
                     <Link to="/home" className="text-4xl font-extrabold">
                         Bright
                     </Link>
 
-                    <div className="hidden md:flex items-center-start gap-5">
+                    <div className="hidden md:flex items-center-start gap-5 mt-1">
                         <NavLink to="/" className="text-lg navbar-link text-foreground">
                             <p>HOME</p>
                             <hr className="w-1/2 border-foreground border hidden"/>
@@ -69,9 +69,9 @@ const ShopNavbar = () => {
                                 </Button>
                             </SheetTrigger>
                             <SheetContent side="left" className="w-[250px]">
-                                <div className="flex flex-col gap-4">
+                                <div className="flex flex-col gap-1">
                                     {isSignedIn ? (
-                                        <div className="mx-4 mt-4 flex items-center gap-2">
+                                        <div className="m-4 flex items-center gap-2">
                                             <UserButton />
                                             {user.fullName}
                                         </div>
