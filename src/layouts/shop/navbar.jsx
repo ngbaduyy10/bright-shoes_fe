@@ -16,7 +16,7 @@ const ShopNavbar = () => {
     const dispatch = useDispatch();
     const [cartOpen, setCartOpen] = useState(false);
     const { cartItems } = useSelector((state) => state.cart);
-    const totalItems = cartItems.reduce((total, item) => {
+    const totalItems = cartItems?.reduce((total, item) => {
         return total + item.quantity;
     }, 0);
 
