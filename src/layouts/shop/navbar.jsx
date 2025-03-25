@@ -18,7 +18,7 @@ const ShopNavbar = () => {
     const { cartItems } = useSelector((state) => state.cart);
     const totalItems = cartItems?.reduce((total, item) => {
         return total + item.quantity;
-    }, 0);
+    }, 0) || 0;
 
     useEffect(() => {
         if (user) {
