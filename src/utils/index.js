@@ -2,12 +2,6 @@ import { Mars, Venus, BabyIcon } from "lucide-react";
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const banners = [
-    "https://authentic-shoes.com/wp-content/uploads/2024/10/20240926111113-0.webp",
-    "https://authentic-shoes.com/wp-content/uploads/2024/12/Giay-Nau.webp",
-    "https://authentic-shoes.com/wp-content/uploads/2024/01/AJ1_Yellow_Ochre_Release_DayPrim.webp"
-]
-
 export const brandOptions = [
     { id: "nike", label: "Nike" },
     { id: "adidas", label: "Adidas" },
