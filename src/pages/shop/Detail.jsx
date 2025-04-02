@@ -230,7 +230,11 @@ const Detail = () => {
                                 disabled={loading}
                                 onClick={handleAddToCart}
                             >
-                                Add to Cart
+                                {loading ? (
+                                    <div className="animate-spin flex-center">
+                                        <LoaderCircle/>
+                                    </div>
+                                ) : "Add to Cart"}
                             </Button>
                         )}
                     </div>

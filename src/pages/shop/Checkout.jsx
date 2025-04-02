@@ -11,6 +11,7 @@ import {createOrder} from "@/services/order.service.js";
 import {toast} from "sonner";
 import {useDispatch} from "react-redux";
 import {clearCartSlice} from "@/store/cartSlice.js";
+import {LoaderCircle} from "lucide-react";
 
 const Checkout = () => {
     const { user } = useUser();
@@ -112,7 +113,11 @@ const Checkout = () => {
                             </div>
                         </div>
                         <Button className="w-full mt-2 cursor-pointer" onClick={handleOrder} disabled={loading}>
-                            Place Order
+                            {loading ? (
+                                <div className="animate-spin">
+                                    <LoaderCircle/>
+                                </div>
+                            ) : "Place Order"}
                         </Button>
                     </div>
                 </div>
