@@ -13,6 +13,7 @@ import {addToCartSlice} from "@/store/cartSlice.js";
 import {useUser} from "@clerk/clerk-react";
 import {getShoeById} from "@/services/shoes.service.js";
 import {getReviews, addReview} from "@/services/review.service.js";
+import {orderCheck} from "@/services/order.service.js";
 import {Bookmark, LoaderCircle, StarIcon} from "lucide-react";
 import {addToWishlist, removeFromWishlist, wishlistCheck} from "@/services/wishlist.service.js";
 import {dayjsDay} from "@/utils/dayjsConfig.js";
@@ -32,6 +33,7 @@ const Detail = () => {
     const [rating, setRating] = useState(0);
     const [reviewLoading, setReviewLoading] = useState(false);
     const [reviewReload, setReviewReload] = useState(false);
+    const [isBought, setIsBought] = useState(false);
 
     useEffect(() => {
         const fetchWishlistCheck = async () => {
@@ -68,6 +70,21 @@ const Detail = () => {
         }
         fetchReviews();
     }, [shoesId, reviewReload]);
+
+    useEffect(() => {
+        const fetchOrderCheck = async () => {
+            const response = await orderCheck({ userId: user.id, shoesId: shoesId });
+            console.log(response);
+            if (response.success) {
+                if (response.data && response.data.length > 0) {
+                    setIsBought(true);
+                }
+            }
+        }
+        if (user) {
+            fetchOrderCheck();
+        }
+    }, [shoesId, user]);
 
     const handleAddToCart = async () => {
         if (!user) {
@@ -293,7 +310,7 @@ const Detail = () => {
                         </>
                     )}
                 </div>
-                {isSignedIn && (
+                {isSignedIn && isBought && (
                     <div className="mt-10 flex-col flex gap-2">
                         <Label className="text-lg">Write a review</Label>
                         <div className="flex items-center gap-0.5">

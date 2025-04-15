@@ -18,3 +18,8 @@ export const getOrdersByUserId = async (userId) => {
     const response = await axios.get(`${BASE_URL}/order/${userId}`);
     return response.data;
 }
+
+export const orderCheck = async (data) => {
+    const response = await axios.get(`${BASE_URL}/order/check/${data.userId}/${data.shoesId}`);
+    return response.data;
+}
