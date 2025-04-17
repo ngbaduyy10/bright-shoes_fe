@@ -1,4 +1,9 @@
-import { Mars, Venus, BabyIcon } from "lucide-react";
+import feature_1 from "@/assets/feature_1.png";
+import feature_2 from "@/assets/feature_2.png";
+import feature_3 from "@/assets/feature_3.svg";
+import feature_4 from "@/assets/feature_4.svg";
+import feature_5 from "@/assets/feature_5.png";
+import feature_6 from "@/assets/feature_6.png";
 
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -17,6 +22,39 @@ export const sortOptions = [
     { id: "title-asc", label: "Title: A to Z" },
     { id: "title-desc", label: "Title: Z to A" },
     { id: "default", label: "Default" },
+];
+
+export const keyFeatures = [
+    {
+        imgSrc: feature_1,
+        title: 'A better resume in minutes',
+        desc: 'Tick every box and make sure your resume is never filtered out by the hiring software.',
+    },
+    {
+        imgSrc: feature_2,
+        title: 'ATS-friendly templates',
+        desc: 'Replace your old resume in a few simple clicks. Our builder gives recruiters what they want.',
+    },
+    {
+        imgSrc: feature_3,
+        title: 'Pre-written content',
+        desc: 'Stop worrying about words. Save time by adding pre-approved, tested content from certified writers.',
+    },
+    {
+        imgSrc: feature_4,
+        title: 'Easy with AI',
+        desc: 'Quickly generate formal phrases and summaries. Sound professional, faster.',
+    },
+    {
+        imgSrc: feature_5,
+        title: 'Beat the competition',
+        desc: 'Our tested resume templates are designed to make you more attractive to recruiters.',
+    },
+    {
+        imgSrc: feature_6,
+        title: 'Get paid more',
+        desc: 'A higher salary begins with a strong resume. Our salary analyzer tells you if your job offer is competitive.',
+    },
 ];
 
 export const itemList = [
@@ -60,12 +98,6 @@ export const itemList = [
         description: "Embrace retro style with the Nike Dunk Low Retro. Featuring classic color blocking and a padded collar, these sneakers deliver both old-school aesthetics and all-day comfort for fashion-forward wearers.",
         totalStock: 60,
     },
-];
-
-export const categoriesIcon = [
-    { id: "men", label: "Men", icon: Mars },
-    { id: "women", label: "Women", icon: Venus },
-    { id: "kids", label: "Kids", icon: BabyIcon },
 ];
 
 export const paymentToString = (paymentMethod) => {
