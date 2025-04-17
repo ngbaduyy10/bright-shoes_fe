@@ -8,6 +8,11 @@ import Detail from "@/pages/shop/Detail.jsx";
 import Checkout from "@/pages/shop/Checkout.jsx";
 import Account from "@/pages/shop/Account.jsx";
 import PaymentSuccess from "@/pages/shop/PaymentSuccess.jsx";
+import AdminLogin from "@/pages/admin/AdminLogin.jsx";
+import AuthCheck from "@/components/AuthCheck.jsx";
+import AdminLayout from "@/layouts/admin/index.jsx";
+import User from "@/pages/admin/User.jsx";
+import Unauthorized from "@/pages/Unauthorized.jsx";
 
 const routes = [
     {
@@ -50,6 +55,28 @@ const routes = [
                 element: <Register />
             }
         ]
+    },
+    {
+        path: "/admin/login",
+        element: <AdminLogin />
+    },
+    {
+        element: <AuthCheck />,
+        children: [
+            {
+                element: <AdminLayout />,
+                children: [
+                    {
+                        path: "/admin/user",
+                        element: <User />
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        path: "/unauthorized",
+        element: <Unauthorized />
     }
 ]
 
