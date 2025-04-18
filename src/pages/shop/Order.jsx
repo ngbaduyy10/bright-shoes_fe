@@ -8,6 +8,7 @@ import {getOrdersByUserId} from "@/services/order.service.js";
 import {dayjsDate} from "@/utils/dayjsConfig.js";
 import OrderDetail from "@/components/OrderDetail.jsx";
 import {LoaderCircle} from "lucide-react";
+import {getStatusColor} from "@/utils/index.js";
 
 const Order = () => {
     const { user } = useUser();
@@ -71,7 +72,7 @@ const Order = () => {
                                                     {dayjsDate(order?.created_at)}
                                                 </TableCell>
                                                 <TableCell className="text-center">
-                                                    <Badge className="py-1 px-3 bg-green-500">
+                                                    <Badge className={`py-1 px-3 ${getStatusColor(order?.status)}`}>
                                                         {order?.status.toUpperCase()}
                                                     </Badge>
                                                 </TableCell>
@@ -90,11 +91,13 @@ const Order = () => {
                     )}
                 </CardContent>
             </Card>
-            <OrderDetail
-                open={orderDetailOpen}
-                setOpen={setOrderDetailOpen}
-                order={selectedOrder}
-            />
+            {selectedOrder &&
+                <OrderDetail
+                    open={orderDetailOpen}
+                    setOpen={setOrderDetailOpen}
+                    order={selectedOrder}
+                />
+            }
         </>
     )
 }

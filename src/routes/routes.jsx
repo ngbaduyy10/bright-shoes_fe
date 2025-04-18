@@ -13,6 +13,7 @@ import AuthCheck from "@/components/AuthCheck.jsx";
 import AdminLayout from "@/layouts/admin/index.jsx";
 import User from "@/pages/admin/User.jsx";
 import Unauthorized from "@/pages/Unauthorized.jsx";
+import AdminOrder from "@/pages/admin/Order.jsx";
 
 const routes = [
     {
@@ -69,6 +70,10 @@ const routes = [
                     {
                         path: "/admin/user",
                         element: <User />
+                    },
+                    {
+                        path: "/admin/order",
+                        element: <AdminOrder />
                     }
                 ]
             }

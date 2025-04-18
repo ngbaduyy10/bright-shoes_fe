@@ -1,16 +1,13 @@
-import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import PropTypes from "prop-types";
+import {Dialog, DialogContent} from "@/components/ui/dialog.jsx";
+import {Label} from "@/components/ui/label.jsx";
 import {dayjsDate} from "@/utils/dayjsConfig.js";
-import {useUser} from "@clerk/clerk-react";
-import OrderItem from "@/components/OrderItem.jsx";
 import {getStatusColor, paymentToString} from "@/utils/index.js";
+import {Badge} from "@/components/ui/badge.jsx";
+import {Separator} from "@/components/ui/separator.jsx";
+import OrderItem from "@/components/OrderItem.jsx";
+import PropTypes from "prop-types";
 
-function OrderDetail({ open, setOpen, order }) {
-    const { user } = useUser();
-
+const AdminOrderDetail = ({ open, setOpen, order }) => {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="sm:max-w-[600px]">
@@ -58,7 +55,8 @@ function OrderDetail({ open, setOpen, order }) {
                     <div className="flex flex-col gap-2">
                         <div className="font-medium">Shipping Address</div>
                         <div className="flex flex-col gap-1 text-muted-foreground">
-                            <span>User Name: {user?.firstName} {user?.lastName}</span>
+                            <span>User Name: {order?.first_name} {order?.last_name}</span>
+                            <span>Email: {order?.email}</span>
                             <span>Street: {order?.street}</span>
                             <span>Ward: {order?.ward}</span>
                             <span>District: {order?.district}</span>
@@ -73,10 +71,10 @@ function OrderDetail({ open, setOpen, order }) {
     );
 }
 
-OrderDetail.propTypes = {
-    open: PropTypes.bool,
-    setOpen: PropTypes.func,
-    order: PropTypes.object,
+AdminOrderDetail.propTypes = {
+    open: PropTypes.bool.isRequired,
+    setOpen: PropTypes.func.isRequired,
+    order: PropTypes.object.isRequired,
 }
 
-export default OrderDetail;
+export default AdminOrderDetail;
