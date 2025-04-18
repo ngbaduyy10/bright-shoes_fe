@@ -7,6 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.jsx";
 import {adminLogin} from "@/services/auth.service.js";
 import {toast} from "sonner";
+import {authCheck} from "@/store/authSlice.js";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import {LoaderCircle} from "lucide-react";
 
 const formSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -22,15 +26,19 @@ const AdminLogin = () => {
         },
     });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data) => {
+        setLoading(true);
         const response = await adminLogin(data);
         if (response.success) {
+            await dispatch(authCheck());
             toast.success(response.message);
-            navigate("/admin/user", { replace: true });
         } else {
             toast.error(response.message);
         }
+        setLoading(false);
     }
 
     return (
@@ -80,7 +88,13 @@ const AdminLogin = () => {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit" className="w-full cursor-pointer mt-2">Sign In</Button>
+                            <Button type="submit" disabled={loading} className="w-full cursor-pointer mt-2">
+                                {loading ? (
+                                    <div className="animate-spin flex-center">
+                                        <LoaderCircle/>
+                                    </div>
+                                ) : "Sign In"}
+                            </Button>
                         </form>
                     </Form>
                     <p className="text-sm text-muted-foreground mt-2 cursor-pointer hover:text-primary">Forgot password?</p>

@@ -60,12 +60,12 @@ const routes = [
         ]
     },
     {
-        path: "/admin/login",
-        element: <AdminLogin />
-    },
-    {
         element: <AuthCheck />,
         children: [
+            {
+                path: "/admin/login",
+                element: <AdminLogin />
+            },
             {
                 element: <AdminLayout />,
                 children: [

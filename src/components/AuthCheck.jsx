@@ -31,8 +31,13 @@ const AuthCheck = () => {
         );
     }
 
+    console.log(isAuth, location.pathname);
+
     if (!isAuth && !location.pathname.includes("/login")) {
         return <Navigate to="/unauthorized" replace={true}/>;
+    }
+    if (isAuth && location.pathname.includes("/login")) {
+        return <Navigate to="/admin/dashboard" replace={true}/>;
     }
 
     return <Outlet />;
