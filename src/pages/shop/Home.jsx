@@ -62,7 +62,7 @@ const Home = () => {
             </div>
 
             <div className="container mx-auto pt-[70px] pb-[100px] px-2">
-                <h1 className="text-4xl font-bold text-center mb-10">Get hired fast with a powerful resume</h1>
+                <h1 className="text-4xl font-bold text-center mb-15">Get hired fast with a powerful resume</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
                     {keyFeatures.map((feature, index) => (
                         <div key={index}>

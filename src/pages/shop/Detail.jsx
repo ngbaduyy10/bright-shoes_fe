@@ -74,7 +74,6 @@ const Detail = () => {
     useEffect(() => {
         const fetchOrderCheck = async () => {
             const response = await orderCheck({ userId: user.id, shoesId: shoesId });
-            console.log(response);
             if (response.success) {
                 if (response.data && response.data.length > 0) {
                     setIsBought(true);
