@@ -14,6 +14,8 @@ import AdminLayout from "@/layouts/admin/index.jsx";
 import User from "@/pages/admin/User.jsx";
 import Unauthorized from "@/pages/Unauthorized.jsx";
 import AdminOrder from "@/pages/admin/Order.jsx";
+import Dashboard from "@/pages/admin/Dashboard.jsx";
+import Shoes from "@/pages/admin/Shoes.jsx";
 
 const routes = [
     {
@@ -68,8 +70,16 @@ const routes = [
                 element: <AdminLayout />,
                 children: [
                     {
+                        path: "/admin/dashboard",
+                        element: <Dashboard />
+                    },
+                    {
                         path: "/admin/user",
                         element: <User />
+                    },
+                    {
+                        path: "/admin/shoes",
+                        element: <Shoes />
                     },
                     {
                         path: "/admin/order",
