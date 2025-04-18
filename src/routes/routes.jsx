@@ -70,6 +70,9 @@ const routes = [
                 element: <AdminLayout />,
                 children: [
                     {
+                        path: "/admin",
+                    },
+                    {
                         path: "/admin/dashboard",
                         element: <Dashboard />
                     },

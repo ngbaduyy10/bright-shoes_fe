@@ -31,7 +31,13 @@ const AuthCheck = () => {
         );
     }
 
-    console.log(isAuth, location.pathname);
+    if (location.pathname === "/admin") {
+        if (!isAuth) {
+            return <Navigate to="/admin/login" />;
+        } else {
+            return <Navigate to="/admin/dashboard" />;
+        }
+    }
 
     if (!isAuth && !location.pathname.includes("/login")) {
         return <Navigate to="/unauthorized" replace={true}/>;
