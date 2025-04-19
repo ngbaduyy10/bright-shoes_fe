@@ -29,7 +29,16 @@ export const adminLogin = async (data) => {
 }
 
 export const adminLogout = async () => {
-    const response = await axios.get(`${BASE_URL}/auth/admin/logout`, { withCredentials: true });
+    const response = await axios.post(
+        `${BASE_URL}/auth/admin/logout`,
+        {},
+        {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+    );
     return response.data;
 }
 
