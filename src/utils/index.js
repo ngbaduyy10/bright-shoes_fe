@@ -19,8 +19,8 @@ export const brandOptions = [
 export const sortOptions = [
     { id: "price-asc", label: "Price: Low to High" },
     { id: "price-desc", label: "Price: High to Low" },
-    { id: "title-asc", label: "Title: A to Z" },
-    { id: "title-desc", label: "Title: Z to A" },
+    { id: "rating-asc", label: "Rating: Low to High" },
+    { id: "rating-desc", label: "Rating: High to Low" },
     { id: "default", label: "Default" },
 ];
 

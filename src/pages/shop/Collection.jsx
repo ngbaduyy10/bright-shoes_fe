@@ -14,6 +14,8 @@ const Collection = () => {
     const [sort, setSort] = useState("default");
     const [itemList, setItemList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState([]);
+    const [keyword, setKeyword] = useState("");
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -22,17 +24,26 @@ const Collection = () => {
                 setCategoryList(response.data);
             }
         }
-
         fetchCategories();
+    }, []);
 
+    useEffect(() => {
         const fetchShoes = async () => {
-            const response = await getShoes();
+            const response = await getShoes({categories: selectedCategory, sort, keyword});
             if (response.success) {
                 setItemList(response.data);
             }
         }
         fetchShoes();
-    }, []);
+    }, [selectedCategory, sort, keyword]);
+
+    const handleSelectCategory = (categoryId) => {
+        if (selectedCategory.includes(categoryId)) {
+            setSelectedCategory(selectedCategory.filter((id) => id !== categoryId));
+        } else {
+            setSelectedCategory([...selectedCategory, categoryId]);
+        }
+    }
 
     return (
         <>
@@ -58,7 +69,13 @@ const Collection = () => {
                             <div className="flex flex-col gap-2">
                                 {categoryList.map((category) => (
                                     <Label className="flex items-center gap-2 text-foreground" key={category.id}>
-                                        <Checkbox/>
+                                        <Checkbox
+                                            checked={
+                                                selectedCategory.length > 0 &&
+                                                selectedCategory.includes(category.id)
+                                            }
+                                            onCheckedChange={() => handleSelectCategory(category.id)}
+                                        />
                                         {capitalizeFirstLetter(category.name)}
                                     </Label>
                                 ))}
@@ -75,7 +92,7 @@ const Collection = () => {
                             <div className="flex flex-col gap-2">
                                 {brandOptions.map((option) => (
                                     <Label className="flex items-center gap-2 text-foreground" key={option.id}>
-                                        <Checkbox/>
+                                        <Checkbox />
                                         {option.label}
                                     </Label>
                                 ))}
@@ -87,13 +104,19 @@ const Collection = () => {
                         <div className="flex items-center justify-end sm:justify-between mb-3">
                             <div className="text-xl font-bold py-2 hidden sm:block">COLLECTIONS</div>
                             <div className="flex items-center gap-2">
-                                <Input type="text" placeholder="Search" className="sm:w-[250px] lg:w-[400px]"/>
+                                <Input
+                                    type="text"
+                                    placeholder="Search"
+                                    className="sm:w-[250px] lg:w-[400px]"
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                />
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button
                                             variant="outline"
                                             size="sm"
-                                            className="flex items-center gap-1 cursor-pointer hover:bg-primary hover:text-white h-[36px]"
+                                            className="flex items-center gap-1 cursor-pointer h-[36px] hover:bg-primary hover:text-white"
                                         >
                                             <ArrowUpDownIcon className="h-4 w-4"/>
                                             <span>Sort by</span>
@@ -108,6 +131,7 @@ const Collection = () => {
                                                 <DropdownMenuRadioItem
                                                     value={sortItem.id}
                                                     key={sortItem.id}
+                                                    className="cursor-pointer focus:bg-primary focus:text-white"
                                                 >
                                                     {sortItem.label}
                                                 </DropdownMenuRadioItem>
