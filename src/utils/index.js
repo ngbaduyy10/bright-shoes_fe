@@ -134,3 +134,11 @@ export const getStatusColor = (status) => {
             return 'bg-gray-500';
     }
 };
+
+export const statusOptions = [
+    { id: 'pending', label: 'Pending' },
+    { id: 'processing', label: 'Processing' },
+    { id: 'delivered', label: 'Delivered' },
+    { id: 'shipped', label: 'Shipped' },
+    { id: 'cancelled', label: 'Cancelled' }
+];

@@ -28,3 +28,16 @@ export const getAllOrders = async () => {
     const response = await axios.get(`${BASE_URL}/order`);
     return response.data;
 }
+
+export const updateOrderStatus = async (orderId, data) => {
+    const response = await axios.patch(
+        `${BASE_URL}/order/status/${orderId}`,
+        data,
+        {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+    );
+    return response.data;
+}
