@@ -7,6 +7,7 @@ import {ArrowUpDownIcon, RotateCcw} from "lucide-react";
 import {useEffect, useState} from "react";
 import ItemCard from "@/components/ItemCard.jsx";
 import {Input} from "@/components/ui/input.jsx";
+import {Skeleton} from "@/components/ui/skeleton.jsx";
 import {getShoes} from "@/services/shoes.service.js";
 import {getCategories} from "@/services/category.service.js";
 
@@ -16,6 +17,7 @@ const Collection = () => {
     const [categoryList, setCategoryList] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState([]);
     const [keyword, setKeyword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -29,10 +31,12 @@ const Collection = () => {
 
     useEffect(() => {
         const fetchShoes = async () => {
+            setLoading(true);
             const response = await getShoes({categories: selectedCategory, sort, keyword});
             if (response.success) {
                 setItemList(response.data);
             }
+            setLoading(false);
         }
         fetchShoes();
     }, [selectedCategory, sort, keyword]);
@@ -143,9 +147,27 @@ const Collection = () => {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                            {itemList.map((item) => (
-                                <ItemCard key={item.id} item={item} />
-                            ))}
+                            {loading ? (
+                                Array(10).fill(0).map((_, index) => (
+                                    <div className="cursor-pointer rounded-lg" key={index}>
+                                        <div className="overflow-hidden rounded-lg">
+                                            <Skeleton className="h-48 w-full"/>
+                                        </div>
+                                        <Skeleton className="h-4 w-3/4 mt-2"/>
+                                        <Skeleton className="h-4 w-1/4 mt-1"/>
+                                    </div>
+                                ))
+                            ) : (
+                                itemList.length > 0 ? (
+                                    itemList.map((item) => (
+                                        <ItemCard key={item.id} item={item}/>
+                                    ))
+                                ) : (
+                                    <div className="col-span-5 text-center text-lg font-semibold">
+                                        No items found
+                                    </div>
+                                )
+                            )}
                         </div>
                     </div>
                 </div>
