@@ -2,7 +2,7 @@ import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const ShopFooter = () => {
     return (
-        <footer className="bg-primary p-10">
+        <footer className="bg-primary px-10 py-18">
             <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4 text-white">
                 <div className="col-span-3 md:col-span-2 mb-4">
                     <div className="font-extrabold text-2xl mb-3">Bright</div>

@@ -19,41 +19,41 @@ export const brandOptions = [
 export const sortOptions = [
     { id: "price-asc", label: "Price: Low to High" },
     { id: "price-desc", label: "Price: High to Low" },
-    { id: "title-asc", label: "Title: A to Z" },
-    { id: "title-desc", label: "Title: Z to A" },
+    { id: "rating-asc", label: "Rating: Low to High" },
+    { id: "rating-desc", label: "Rating: High to Low" },
     { id: "default", label: "Default" },
 ];
 
 export const keyFeatures = [
     {
-        imgSrc: feature_1,
-        title: 'A better resume in minutes',
-        desc: 'Tick every box and make sure your resume is never filtered out by the hiring software.',
+        imgSrc: feature_6,
+        title: 'All-day comfort',
+        desc: 'Designed with advanced cushioning and breathable materials to keep you comfortable from morning to night.',
     },
     {
         imgSrc: feature_2,
-        title: 'ATS-friendly templates',
-        desc: 'Replace your old resume in a few simple clicks. Our builder gives recruiters what they want.',
+        title: 'Lightweight design',
+        desc: 'Move freely with ultra-light soles that reduce fatigue, no matter where your day takes you.',
     },
     {
         imgSrc: feature_3,
-        title: 'Pre-written content',
-        desc: 'Stop worrying about words. Save time by adding pre-approved, tested content from certified writers.',
+        title: 'Durable build',
+        desc: 'Crafted with premium materials to withstand daily wear and tear without compromising on style.',
     },
     {
         imgSrc: feature_4,
-        title: 'Easy with AI',
-        desc: 'Quickly generate formal phrases and summaries. Sound professional, faster.',
+        title: 'Fits like a glove',
+        desc: 'Ergonomic fit that adapts to your foot shape for support and stability with every step.',
     },
     {
         imgSrc: feature_5,
-        title: 'Beat the competition',
-        desc: 'Our tested resume templates are designed to make you more attractive to recruiters.',
+        title: 'Stylish for any occasion',
+        desc: 'From the gym to the streets — versatile designs that complement your lifestyle and wardrobe.',
     },
     {
-        imgSrc: feature_6,
-        title: 'Get paid more',
-        desc: 'A higher salary begins with a strong resume. Our salary analyzer tells you if your job offer is competitive.',
+        imgSrc: feature_1,
+        title: 'Enhanced grip',
+        desc: 'Slip-resistant soles provide better traction, keeping you steady in all conditions.',
     },
 ];
 
@@ -134,3 +134,11 @@ export const getStatusColor = (status) => {
             return 'bg-gray-500';
     }
 };
+
+export const statusOptions = [
+    { id: 'pending', label: 'Pending' },
+    { id: 'processing', label: 'Processing' },
+    { id: 'delivered', label: 'Delivered' },
+    { id: 'shipped', label: 'Shipped' },
+    { id: 'cancelled', label: 'Cancelled' }
+];

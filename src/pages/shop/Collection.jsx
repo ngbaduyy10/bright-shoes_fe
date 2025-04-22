@@ -16,14 +16,18 @@ import {
 import { ArrowUpDownIcon, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import ItemCard from "@/components/ItemCard.jsx";
-import { Input } from "@/components/ui/input.jsx";
-import { getShoes } from "@/services/shoes.service.js";
-import { getCategories } from "@/services/category.service.js";
+import {Input} from "@/components/ui/input.jsx";
+import {Skeleton} from "@/components/ui/skeleton.jsx";
+import {getShoes} from "@/services/shoes.service.js";
+import {getCategories} from "@/services/category.service.js";
 
 const Collection = () => {
     const [sort, setSort] = useState("default");
     const [itemList, setItemList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState([]);
+    const [keyword, setKeyword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -32,17 +36,28 @@ const Collection = () => {
                 setCategoryList(response.data);
             }
         };
-
         fetchCategories();
+    }, []);
 
+    useEffect(() => {
         const fetchShoes = async () => {
-            const response = await getShoes();
+            setLoading(true);
+            const response = await getShoes({categories: selectedCategory, sort, keyword});
             if (response.success) {
                 setItemList(response.data);
             }
+            setLoading(false);
         };
         fetchShoes();
-    }, []);
+    }, [selectedCategory, sort, keyword]);
+
+    const handleSelectCategory = (categoryId) => {
+        if (selectedCategory.includes(categoryId)) {
+            setSelectedCategory(selectedCategory.filter((id) => id !== categoryId));
+        } else {
+            setSelectedCategory([...selectedCategory, categoryId]);
+        }
+    }
 
     return (
         <>
@@ -74,11 +89,14 @@ const Collection = () => {
                             </div>
                             <div className="flex flex-col gap-2">
                                 {categoryList.map((category) => (
-                                    <Label
-                                        className="flex items-center gap-2 text-foreground"
-                                        key={category.id}
-                                    >
-                                        <Checkbox />
+                                    <Label className="flex items-center gap-2 text-foreground" key={category.id}>
+                                        <Checkbox
+                                            checked={
+                                                selectedCategory.length > 0 &&
+                                                selectedCategory.includes(category.id)
+                                            }
+                                            onCheckedChange={() => handleSelectCategory(category.id)}
+                                        />
                                         {capitalizeFirstLetter(category.name)}
                                     </Label>
                                 ))}
@@ -121,13 +139,15 @@ const Collection = () => {
                                     type="text"
                                     placeholder="Search"
                                     className="sm:w-[250px] lg:w-[400px]"
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
                                 />
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button
                                             variant="outline"
                                             size="sm"
-                                            className="flex items-center gap-1 cursor-pointer hover:bg-primary hover:text-white h-[36px]"
+                                            className="flex items-center gap-1 cursor-pointer h-[36px] hover:bg-primary hover:text-white"
                                         >
                                             <ArrowUpDownIcon className="h-4 w-4" />
                                             <span>Sort by</span>
@@ -147,6 +167,7 @@ const Collection = () => {
                                                 <DropdownMenuRadioItem
                                                     value={sortItem.id}
                                                     key={sortItem.id}
+                                                    className="cursor-pointer focus:bg-primary focus:text-white"
                                                 >
                                                     {sortItem.label}
                                                 </DropdownMenuRadioItem>
@@ -157,10 +178,28 @@ const Collection = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                            {itemList.map((item) => (
-                                <ItemCard key={item.id} item={item} />
-                            ))}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            {loading ? (
+                                Array(10).fill(0).map((_, index) => (
+                                    <div className="cursor-pointer rounded-lg" key={index}>
+                                        <div className="overflow-hidden rounded-lg">
+                                            <Skeleton className="h-48 w-full"/>
+                                        </div>
+                                        <Skeleton className="h-4 w-3/4 mt-2"/>
+                                        <Skeleton className="h-4 w-1/4 mt-1"/>
+                                    </div>
+                                ))
+                            ) : (
+                                itemList.length > 0 ? (
+                                    itemList.map((item) => (
+                                        <ItemCard key={item.id} item={item}/>
+                                    ))
+                                ) : (
+                                    <div className="col-span-5 text-center text-lg font-semibold">
+                                        No items found
+                                    </div>
+                                )
+                            )}
                         </div>
                     </div>
                 </div>

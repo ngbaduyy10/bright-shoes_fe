@@ -48,7 +48,7 @@ function AdminSideBar({ open, setOpen }) {
                         </SheetHeader>
                         <div className="flex flex-col items-center gap-1 mx-2">
                             <div className="py-2 w-full">
-                                <Input type="text" placeholder="Search..." className="border-0 bg-accent h-[45px] px-4 placeholder:text-white" />
+                                <Input type="text" placeholder="Search..." className="border-0 bg-[#3D3350] h-[50px] px-4 placeholder:text-white" />
                             </div>
                             {adminSidebarMenuItems.map((menuItem) => (
                                 <div
@@ -71,14 +71,14 @@ function AdminSideBar({ open, setOpen }) {
                     </div>
                 </SheetContent>
             </Sheet>
-            <aside className="hidden flex-col bg-primary text-white lg:flex w-64 rounded-lg">
+            <aside className="fixed left-0 top-0 h-full hidden flex-col bg-primary text-white lg:flex w-64 rounded-lg">
                 <div className="flex items-center gap-2 py-5 px-4 mx-1 h-[80px]">
                     <ChartNoAxesCombined size={28}/>
                     <div className="text-2xl font-extrabold">Admin Panel</div>
                 </div>
                 <div className="flex flex-col items-start gap-1 mx-2">
                     <div className="py-2 w-full">
-                        <Input type="text" placeholder="Search..." className="border-0 bg-accent h-[45px] px-4 placeholder:text-white"/>
+                        <Input type="text" placeholder="Search..." className="border-0 bg-[#3D3350] h-[50px] px-4 placeholder:text-white"/>
                     </div>
                     {adminSidebarMenuItems.map((menuItem) => (
                         <div

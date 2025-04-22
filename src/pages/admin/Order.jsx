@@ -19,6 +19,7 @@ const AdminOrder = () => {
     const [orderList, setOrderList] = useState([]);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -29,7 +30,7 @@ const AdminOrder = () => {
         };
 
         fetchOrders();
-    }, []);
+    }, [reload]);
 
     const handleViewDetail = (order) => {
         setSelectedOrder(order);
@@ -77,7 +78,15 @@ const AdminOrder = () => {
                 </CardContent>
             </Card>
 
-            {selectedOrder && <AdminOrderDetail setOpen={setDialogOpen} open={dialogOpen} order={selectedOrder} />}
+            {selectedOrder &&
+                <AdminOrderDetail
+                    setOpen={setDialogOpen}
+                    open={dialogOpen}
+                    order={selectedOrder}
+                    reload={reload}
+                    setReload={setReload}
+                />
+            }
         </>
     );
 }
