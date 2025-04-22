@@ -146,7 +146,7 @@ const Collection = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             {loading ? (
                                 Array(10).fill(0).map((_, index) => (
                                     <div className="cursor-pointer rounded-lg" key={index}>

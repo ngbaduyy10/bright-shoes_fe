@@ -71,7 +71,7 @@ function AdminSideBar({ open, setOpen }) {
                     </div>
                 </SheetContent>
             </Sheet>
-            <aside className="hidden flex-col bg-primary text-white lg:flex w-64 rounded-lg">
+            <aside className="fixed left-0 top-0 h-full hidden flex-col bg-primary text-white lg:flex w-64 rounded-lg">
                 <div className="flex items-center gap-2 py-5 px-4 mx-1 h-[80px]">
                     <ChartNoAxesCombined size={28}/>
                     <div className="text-2xl font-extrabold">Admin Panel</div>

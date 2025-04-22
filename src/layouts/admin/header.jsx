@@ -23,7 +23,7 @@ function AdminHeader({setSidebarOpen}) {
     }
 
     return (
-        <header className="flex items-center justify-between px-4 py-3 bg-background border-b h-[80px]">
+        <header className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-background border-b h-[80px]">
             <Button className="lg:hidden sm:block cursor-pointer bg-primary" onClick={() => setSidebarOpen(true)}>
                 <AlignJustify/>
             </Button>
