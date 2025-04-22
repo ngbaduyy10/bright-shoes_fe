@@ -8,6 +8,14 @@ import Detail from "@/pages/shop/Detail.jsx";
 import Checkout from "@/pages/shop/Checkout.jsx";
 import Account from "@/pages/shop/Account.jsx";
 import PaymentSuccess from "@/pages/shop/PaymentSuccess.jsx";
+import AdminLogin from "@/pages/admin/AdminLogin.jsx";
+import AuthCheck from "@/components/AuthCheck.jsx";
+import AdminLayout from "@/layouts/admin/index.jsx";
+import User from "@/pages/admin/User.jsx";
+import Unauthorized from "@/pages/Unauthorized.jsx";
+import AdminOrder from "@/pages/admin/Order.jsx";
+import Dashboard from "@/pages/admin/Dashboard.jsx";
+import Shoes from "@/pages/admin/Shoes.jsx";
 
 const routes = [
     {
@@ -50,6 +58,43 @@ const routes = [
                 element: <Register />
             }
         ]
+    },
+    {
+        element: <AuthCheck />,
+        children: [
+            {
+                path: "/admin/login",
+                element: <AdminLogin />
+            },
+            {
+                element: <AdminLayout />,
+                children: [
+                    {
+                        path: "/admin",
+                    },
+                    {
+                        path: "/admin/dashboard",
+                        element: <Dashboard />
+                    },
+                    {
+                        path: "/admin/user",
+                        element: <User />
+                    },
+                    {
+                        path: "/admin/shoes",
+                        element: <Shoes />
+                    },
+                    {
+                        path: "/admin/order",
+                        element: <AdminOrder />
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        path: "/unauthorized",
+        element: <Unauthorized />
     }
 ]
 

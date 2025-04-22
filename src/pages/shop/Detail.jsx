@@ -74,7 +74,6 @@ const Detail = () => {
     useEffect(() => {
         const fetchOrderCheck = async () => {
             const response = await orderCheck({ userId: user.id, shoesId: shoesId });
-            console.log(response);
             if (response.success) {
                 if (response.data && response.data.length > 0) {
                     setIsBought(true);
@@ -163,8 +162,8 @@ const Detail = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-12 max-w-[90vw] md:max-w-[95vw] lg:max-w-[85vw] xl:max-w-[70vw]">
-                <div className="relative overflow-hidden rounded-lg">
+            <div className="flex flex-col lg:flex-row gap-8 py-12 container px-2">
+                <div className="overflow-hidden rounded-lg w-full xl:w-2/5">
                     <img
                         src={item?.image_url}
                         alt={item?.name}
@@ -173,7 +172,7 @@ const Detail = () => {
                         className="aspect-square w-full object-cover"
                     />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full xl:w-3/5">
                     <div>
                         <div className="flex items-start justify-between">
                             <h1 className="text-2xl font-extrabold text-black">{item?.name}</h1>
@@ -224,7 +223,7 @@ const Detail = () => {
                             {avgRating?.toFixed(1) || 0} ({reviews.length} reviews)
                         </span>
                     </div>
-                    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 mt-2">
+                    <div className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-5 xl:grid-cols-7 gap-2 mt-2">
                         {item?.size.map((size) => (
                             <div
                                 key={size}
@@ -257,8 +256,8 @@ const Detail = () => {
                     </div>
                 </div>
             </div>
-            <Separator className="max-w-[90vw] md:max-w-[95vw] lg:max-w-[85vw] xl:max-w-[70vw]"/>
-            <div className="flex flex-col py-12 w-full max-w-[90vw] md:max-w-[95vw] lg:max-w-[85vw] xl:max-w-[70vw]">
+            <Separator className="container px-2"/>
+            <div className="flex flex-col py-12 w-full container px-2">
                 <h2 className="text-2xl font-extrabold text-black mb-4">Reviews</h2>
                 <div className="flex flex-col gap-6">
                     {reviewLoading ? (

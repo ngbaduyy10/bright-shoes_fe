@@ -1,9 +1,8 @@
 import {useState, useEffect} from "react";
 import {Button} from "@/components/ui/button.jsx";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import {itemList, categoriesIcon} from "@/utils/index.js";
+import {itemList, keyFeatures} from "@/utils/index.js";
 import ItemCard from "@/components/ItemCard.jsx";
-import {Card, CardContent} from "@/components/ui/card.jsx";
 import {getFeatures} from "@/services/feature.service.js";
 import {useNavigate} from "react-router-dom";
 
@@ -62,44 +61,37 @@ const Home = () => {
                 </Button>
             </div>
 
-            <div className="w-full px-4 md:px-10 lg:px-14 my-[100px] flex flex-col items-center">
-                <div className="text-4xl font-bold">BEST SELLERS</div>
-                <div className="text-lg text-foreground my-3 text-center">
-                    Our best-selling shoes combine style, comfort, and durability. Shop now for the latest must-have footwear!
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-2">
-                    {itemList.map((item) => (
-                        <ItemCard key={item.id} item={item}/>
+            <div className="container mx-auto pt-[70px] pb-[100px] px-2">
+                <h1 className="text-4xl font-bold text-center mb-15">Get hired fast with a powerful resume</h1>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
+                    {keyFeatures.map((feature, index) => (
+                        <div key={index}>
+                            <div className="flex gap-4">
+                                <div className="w-1/7">
+                                    <img src={feature.imgSrc} alt="" className="w-full h-auto"/>
+                                </div>
+                                <div className="w-6/7">
+                                    <div className="text-2xl font-bold">{feature.title}</div>
+                                    <p className="text-lg">{feature.desc}</p>
+                                </div>
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>
 
-            <div className="w-full px-4 md:px-[100px] lg:px-[250px] xl:px-[400px] mb-[100px] text-center">
-                <div className="text-4xl font-bold">SHOP BY CATEGORY</div>
-                <div className="grid grid-cols-3 gap-4 mt-5">
-                    {categoriesIcon.map((category) => (
-                        <Card
-                            key={category.id}
-                            className="cursor-pointer hover:shadow-lg transition-shadow col-span-1"
-                        >
-                            <CardContent className="flex flex-col items-center justify-center">
-                                <category.icon className="w-12 h-12 mb-4 text-primary"/>
-                                <span className="font-bold">{category.label}</span>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </div>
-            </div>
-
-            <div className="w-full px-4 md:px-10 lg:px-14 mb-[100px] flex flex-col items-center">
-                <div className="text-4xl font-bold">LATEST COLLECTIONS</div>
-                <div className="text-lg text-foreground my-3 text-center">
-                    Discover our latest shoe collections featuring modern designs, premium materials, and ultimate comfort. Shop now!
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-2">
-                    {itemList.map((item) => (
-                        <ItemCard key={item.id} item={item}/>
-                    ))}
+            <div className="bg-white">
+                <div className="container mx-auto pt-[70px] pb-[100px] px-2 flex flex-col items-center">
+                    <div className="text-4xl font-bold">Best Sellers</div>
+                    <div className="text-lg text-foreground my-3 text-center">
+                        Our best-selling shoes combine style, comfort, and durability. Shop now for the latest must-have
+                        footwear!
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-2">
+                        {itemList.map((item) => (
+                            <ItemCard key={item.id} item={item}/>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
