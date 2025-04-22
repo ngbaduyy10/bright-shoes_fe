@@ -17,14 +17,13 @@ import { ArrowUpDownIcon, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import ItemCard from "@/components/ItemCard.jsx";
 import { Input } from "@/components/ui/input.jsx";
-import { getShoes, getShoesByCategories } from "@/services/shoes.service.js";
+import { getShoes } from "@/services/shoes.service.js";
 import { getCategories } from "@/services/category.service.js";
 
 const Collection = () => {
     const [sort, setSort] = useState("default");
     const [itemList, setItemList] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -37,20 +36,13 @@ const Collection = () => {
         fetchCategories();
 
         const fetchShoes = async () => {
-            if (selectedCategories.length > 0) {
-                const response = await getShoesByCategories(selectedCategories);
-                if (response.success) {
-                    setItemList(response.data);
-                }
-            } else {
-                const response = await getShoes();
-                if (response.success) {
-                    setItemList(response.data);
-                }
+            const response = await getShoes();
+            if (response.success) {
+                setItemList(response.data);
             }
         };
         fetchShoes();
-    }, [selectedCategories]);
+    }, []);
 
     return (
         <>
@@ -86,19 +78,7 @@ const Collection = () => {
                                         className="flex items-center gap-2 text-foreground"
                                         key={category.id}
                                     >
-                                        <Checkbox
-                                            onCheckedChange={(checked) => {
-                                                setSelectedCategories((prev) =>
-                                                    checked
-                                                        ? [...prev, category.id]
-                                                        : prev.filter(
-                                                              (id) =>
-                                                                  id !==
-                                                                  category.id,
-                                                          ),
-                                                );
-                                            }}
-                                        />
+                                        <Checkbox />
                                         {capitalizeFirstLetter(category.name)}
                                     </Label>
                                 ))}
@@ -190,4 +170,3 @@ const Collection = () => {
 };
 
 export default Collection;
-
