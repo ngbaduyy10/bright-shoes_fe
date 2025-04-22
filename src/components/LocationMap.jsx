@@ -9,13 +9,13 @@ import {
 
 const containerStyle = {
     width: "100%",
-    height: "400px",
+    height: "500px",
 };
 
 // Default center position (San Francisco)
 const defaultCenter = {
-    lat: 37.7749,
-    lng: -122.4194,
+    lat: 10.771853,
+    lng: 106.658045,
 };
 
 const LocationMap = ({
