@@ -5,6 +5,7 @@ import {Separator} from "@/components/ui/separator.jsx";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar.jsx";
 import {Input} from "@/components/ui/input.jsx";
 import {Label} from "@/components/ui/label.jsx";
+import {Skeleton} from "@/components/ui/skeleton.jsx";
 import {TooltipProvider, Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip.jsx";
 import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
@@ -34,6 +35,7 @@ const Detail = () => {
     const [reviewLoading, setReviewLoading] = useState(false);
     const [reviewReload, setReviewReload] = useState(false);
     const [isBought, setIsBought] = useState(false);
+    const [shoesLoading, setShoesLoading] = useState(false);
 
     useEffect(() => {
         const fetchWishlistCheck = async () => {
@@ -49,10 +51,12 @@ const Detail = () => {
 
     useEffect(() => {
         const fetchShoes = async () => {
+            setShoesLoading(true);
             const response = await getShoeById(shoesId);
             if (response.success) {
                 setItem(response.data);
             }
+            setShoesLoading(false);
         }
         window.scrollTo(0, 0);
         fetchShoes();
@@ -162,108 +166,148 @@ const Detail = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="flex flex-col lg:flex-row gap-8 py-12 container px-2">
-                <div className="overflow-hidden rounded-lg w-full xl:w-2/5">
-                    <img
-                        src={item?.image_url}
-                        alt={item?.name}
-                        width={600}
-                        height={600}
-                        className="aspect-square w-full object-cover"
-                    />
-                </div>
-                <div className="flex flex-col w-full xl:w-3/5">
-                    <div>
-                        <div className="flex items-start justify-between">
-                            <h1 className="text-2xl font-extrabold text-black">{item?.name}</h1>
-                            {isSignedIn && wishlistItem ? (
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger>
-                                            <Bookmark
-                                                size={30}
-                                                className="cursor-pointer fill-black text-black"
-                                                onClick={handleRemoveFromWishlist}
-                                            />
-                                        </TooltipTrigger>
-                                        <TooltipContent className="bg-primary">
-                                            <p>Remove from Wishlist</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                            ) : (
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger>
-                                            <Bookmark
-                                                size={30}
-                                                className="cursor-pointer"
-                                                onClick={handleAddToWishlist}
-                                            />
-                                        </TooltipTrigger>
-                                        <TooltipContent className="bg-primary">
-                                            <p>Add to Wishlist</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                            )}
-                        </div>
-                        <p className="text-muted-foreground text-lg mb-5 mt-4 text-justify">
-                            {item?.description}
-                        </p>
+            {shoesLoading ? (
+                <div className="flex flex-col lg:flex-row gap-8 py-12 container px-2 w-full">
+                    <div className="overflow-hidden rounded-lg w-full xl:w-2/5">
+                        <Skeleton className="aspect-square w-full" />
                     </div>
-                    <p className="text-3xl font-bold text-primary">
-                        ${item?.price}
-                    </p>
-                    <div className="flex items-center gap-2 mt-2">
-                        <div className="flex items-center gap-0.5">
-                            <StarRating rating={avgRating} />
+                    <div className="flex flex-col w-full xl:w-3/5">
+                        <div>
+                            <div className="flex items-start justify-between">
+                                <Skeleton className="h-8 w-2/3" />
+                                <Skeleton className="h-8 w-8 rounded-md" />
+                            </div>
+                            <Skeleton className="h-20 w-full mt-4 mb-5" />
                         </div>
-                        <span className="text-muted-foreground">
+                        <Skeleton className="h-10 w-32 mb-3" />
+                        <div className="flex items-center gap-2 mt-2">
+                            <Skeleton className="h-6 w-20" />
+                            <Skeleton className="h-4 w-24" />
+                        </div>
+                        <div className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-5 xl:grid-cols-7 gap-2 mt-2">
+                            {Array.from({ length: 7 }).map((_, index) => (
+                                <Skeleton key={index} className="h-10 w-full" />
+                            ))}
+                        </div>
+                        <div className="mt-5 mb-5">
+                            <Skeleton className="h-10 w-full" />
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div className="flex flex-col lg:flex-row gap-8 py-12 container px-2">
+                    <div className="overflow-hidden rounded-lg w-full xl:w-2/5">
+                        <img
+                            src={item?.image_url}
+                            alt={item?.name}
+                            width={600}
+                            height={600}
+                            className="aspect-square w-full object-cover"
+                        />
+                    </div>
+                    <div className="flex flex-col w-full xl:w-3/5">
+                        <div>
+                            <div className="flex items-start justify-between">
+                                <h1 className="text-2xl font-extrabold text-black">{item?.name}</h1>
+                                {isSignedIn && wishlistItem ? (
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <Bookmark
+                                                    size={30}
+                                                    className="cursor-pointer fill-black text-black"
+                                                    onClick={handleRemoveFromWishlist}
+                                                />
+                                            </TooltipTrigger>
+                                            <TooltipContent className="bg-primary">
+                                                <p>Remove from Wishlist</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                ) : (
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger>
+                                                <Bookmark
+                                                    size={30}
+                                                    className="cursor-pointer"
+                                                    onClick={handleAddToWishlist}
+                                                />
+                                            </TooltipTrigger>
+                                            <TooltipContent className="bg-primary">
+                                                <p>Add to Wishlist</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                )}
+                            </div>
+                            <p className="text-muted-foreground text-lg mb-5 mt-4 text-justify">
+                                {item?.description}
+                            </p>
+                        </div>
+                        <p className="text-3xl font-bold text-primary">
+                            ${item?.price}
+                        </p>
+                        <div className="flex items-center gap-2 mt-2">
+                            <div className="flex items-center gap-0.5">
+                                <StarRating rating={avgRating}/>
+                            </div>
+                            <span className="text-muted-foreground">
                             {avgRating?.toFixed(1) || 0} ({reviews.length} reviews)
                         </span>
-                    </div>
-                    <div className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-5 xl:grid-cols-7 gap-2 mt-2">
-                        {item?.size.map((size) => (
-                            <div
-                                key={size}
-                                className={`flex-center px-1 py-2 border border-muted-foreground rounded-lg cursor-pointer hover:bg-black hover:text-white 
+                        </div>
+                        <div className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-5 xl:grid-cols-7 gap-2 mt-2">
+                            {item?.size.map((size) => (
+                                <div
+                                    key={size}
+                                    className={`flex-center px-1 py-2 border border-muted-foreground rounded-lg cursor-pointer hover:bg-black hover:text-white 
                                     ${selectedSize === size ? "bg-black text-white" : ""}`}
-                                onClick={() => setSelectedSize(size)}
-                            >
-                                US {size}
-                            </div>
-                        ))}
-                    </div>
-                    <div className="mt-5 mb-5">
-                        {item?.quantity === 0 ? (
-                            <Button className="w-full opacity-60 cursor-not-allowed">
-                                Out of Stock
-                            </Button>
-                        ) : (
-                            <Button
-                                className="w-full bg-primary text-md text-white cursor-pointer"
-                                disabled={loading}
-                                onClick={handleAddToCart}
-                            >
-                                {loading ? (
-                                    <div className="animate-spin flex-center">
-                                        <LoaderCircle/>
-                                    </div>
-                                ) : "Add to Cart"}
-                            </Button>
-                        )}
+                                    onClick={() => setSelectedSize(size)}
+                                >
+                                    US {size}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-5 mb-5">
+                            {item?.quantity === 0 ? (
+                                <Button className="w-full opacity-60 cursor-not-allowed">
+                                    Out of Stock
+                                </Button>
+                            ) : (
+                                <Button
+                                    className="w-full bg-primary text-md text-white cursor-pointer"
+                                    disabled={loading}
+                                    onClick={handleAddToCart}
+                                >
+                                    {loading ? (
+                                        <div className="animate-spin flex-center">
+                                            <LoaderCircle/>
+                                        </div>
+                                    ) : "Add to Cart"}
+                                </Button>
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
             <Separator className="container px-2"/>
             <div className="flex flex-col py-12 w-full container px-2">
                 <h2 className="text-2xl font-extrabold text-black mb-4">Reviews</h2>
                 <div className="flex flex-col gap-6">
                     {reviewLoading ? (
-                        <div className="animate-spin flex-center">
-                            <LoaderCircle/>
-                        </div>
+                        Array.from({ length: 2 }).map((_, i) => (
+                            <div className="flex gap-2 mb-6" key={i}>
+                                <Skeleton className="w-10 h-10 rounded-full" />
+                                <div className="flex flex-col gap-1 w-full">
+                                    <div className="flex items-center gap-2">
+                                        <Skeleton className="h-5 w-1/4" />
+                                        <Skeleton className="h-4 w-1/6" />
+                                    </div>
+                                    <Skeleton className="h-4 w-16" />
+                                    <Skeleton className="h-5 w-full" />
+                                </div>
+                            </div>
+                        ))
                     ) : (
                         <>
                             {reviews.length > 0 ? (
@@ -294,7 +338,7 @@ const Detail = () => {
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-1 leading-none">
-                                                <StarIcon size={16} className="fill-yellow-500 text-yellow-500" />
+                                                <StarIcon size={16} className="fill-yellow-500 text-yellow-500"/>
                                                 {reviewItem?.rating}
                                             </div>
                                             <p className="text-muted-foreground text-lg">
@@ -304,7 +348,8 @@ const Detail = () => {
                                     </div>
                                 ))
                             ) : (
-                                <div className="text-lg text-gray-500">No Reviews. Be the first to review this product.</div>
+                                <div className="text-lg text-gray-500">No Reviews. Be the first to review this
+                                    product.</div>
                             )}
                         </>
                     )}
