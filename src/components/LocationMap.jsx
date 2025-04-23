@@ -21,7 +21,7 @@ const defaultCenter = {
 const LocationMap = ({
     apiKey,
     center = defaultCenter,
-    zoom = 10,
+    zoom = 14,
     markers = [],
 }) => {
     const [selectedMarker, setSelectedMarker] = useState(null);

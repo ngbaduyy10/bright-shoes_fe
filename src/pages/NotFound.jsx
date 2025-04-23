@@ -61,7 +61,7 @@ const NotFound = () => {
                 <div className="mt-8 flex justify-center">
                     <button
                         onClick={navigateToHome}
-                        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
                     >
                         <Home className="mr-2 h-5 w-5" />
                         Return to Home

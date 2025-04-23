@@ -16,6 +16,7 @@ import Unauthorized from "@/pages/Unauthorized.jsx";
 import AdminOrder from "@/pages/admin/Order.jsx";
 import Dashboard from "@/pages/admin/Dashboard.jsx";
 import Shoes from "@/pages/admin/Shoes.jsx";
+import NotFound from "@/pages/NotFound.jsx";
 
 const routes = [
     {
@@ -95,6 +96,10 @@ const routes = [
     {
         path: "/unauthorized",
         element: <Unauthorized />
+    },
+    {
+        path: "*",
+        element: <NotFound />
     }
 ]
 

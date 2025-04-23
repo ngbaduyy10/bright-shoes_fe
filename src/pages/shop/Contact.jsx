@@ -68,12 +68,12 @@ const Contact = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
-                See our stores&apos; locations
+            <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+                Contact With Us
             </h1>
             <div className="flex flex-col lg:flex-row gap-4">
                 {/* Contact Form - Left Column */}
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-2/5">
                     <div className="bg-primary text-white rounded-lg shadow-md p-6">
                         <h2 className="text-3xl font-bold">Get In Touch</h2>
                         <h3 className="text-white text-lg font-main mb-4">
@@ -133,7 +133,7 @@ const Contact = () => {
 
                             <button
                                 type="submit"
-                                className="w-full bg-white text-primary py-2 px-4 rounded-md hover:bg-primary hover:text-white hover:cursor-pointer transition duration-300 font-bold"
+                                className="w-full bg-white text-primary py-2 px-4 rounded-md cursor-pointer transition duration-300 font-bold"
                             >
                                 SEND
                             </button>
@@ -142,13 +142,14 @@ const Contact = () => {
                         <div className="w-full flex justify-center items-center gap-3 mt-5">
                             <FacebookIcon size={20} />
                             <TwitterIcon size={20} />
+                            <LinkedinIcon size={20} />
                             <InstagramIcon size={20} />
                         </div>
                     </div>
                 </div>
 
                 {/* Google Map - Right Column */}
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-3/5">
                     <div className="h-96 min-h- lg:h-full rounded-lg shadow-md overflow-hidden">
                         <LocationMap
                             apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
