@@ -5,18 +5,22 @@ import {itemList, keyFeatures} from "@/utils/index.js";
 import ItemCard from "@/components/ItemCard.jsx";
 import {getFeatures} from "@/services/feature.service.js";
 import {useNavigate} from "react-router-dom";
+import {Skeleton} from "@/components/ui/skeleton.jsx";
 
 const Home = () => {
     const navigate = useNavigate();
     const [featureImages, setFeatureImages] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchFeatureImages = async () => {
+            setLoading(true);
             const response = await getFeatures();
             if (response.success) {
                 setFeatureImages(response.data);
             }
+            setLoading(false);
         }
 
         fetchFeatureImages();
@@ -31,40 +35,46 @@ const Home = () => {
 
     return (
         <div className="flex flex-col">
-            <div className="relative w-full overflow-hidden">
-                <div
-                    className="flex transition-transform duration-500 ease-in-out"
-                    style={{transform: `translateX(-${currentSlide * 100}%)`}}
-                >
-                    {featureImages.length > 0 && featureImages.map((slide, index) => (
-                        <img
-                            key={index}
-                            src={slide.image_url}
-                            alt={`slide-${index}`}
-                            className="w-full flex-shrink-0 object-cover cursor-pointer"
-                            onClick={() => navigate(`/detail/${slide.shoes_id}`)}
-                        />
-                    ))}
+            {loading ? (
+                <div className="w-full aspect-3/1 flex items-center justify-center">
+                    <Skeleton className="w-full h-full" />
                 </div>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    className="feature-button left-4 hover:opacity-100 hover:bg-white"
-                    onClick={() => setCurrentSlide((prevSlide) => (
-                        prevSlide - 1 + featureImages.length) % featureImages.length
-                    )}
-                >
-                    <ChevronLeftIcon className="w-4 h-4"/>
-                </Button>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    className="feature-button right-4 hover:opacity-100 hover:bg-white"
-                    onClick={() => setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImages.length)}
-                >
-                    <ChevronRightIcon className="w-4 h-4"/>
-                </Button>
-            </div>
+            ) : (
+                <div className="relative w-full overflow-hidden">
+                    <div
+                        className="flex transition-transform duration-500 ease-in-out"
+                        style={{transform: `translateX(-${currentSlide * 100}%)`}}
+                    >
+                        {featureImages.length > 0 && featureImages.map((slide, index) => (
+                            <img
+                                key={index}
+                                src={slide.image_url}
+                                alt={`slide-${index}`}
+                                className="w-full flex-shrink-0 object-cover cursor-pointer"
+                                onClick={() => navigate(`/detail/${slide.shoes_id}`)}
+                            />
+                        ))}
+                    </div>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className="feature-button left-4 hover:opacity-100 hover:bg-white"
+                        onClick={() => setCurrentSlide((prevSlide) => (
+                            prevSlide - 1 + featureImages.length) % featureImages.length
+                        )}
+                    >
+                        <ChevronLeftIcon className="w-4 h-4"/>
+                    </Button>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className="feature-button right-4 hover:opacity-100 hover:bg-white"
+                        onClick={() => setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImages.length)}
+                    >
+                        <ChevronRightIcon className="w-4 h-4"/>
+                    </Button>
+                </div>
+            )}
 
             <div className="bg-white">
                 <div className="container mx-auto pt-[70px] pb-[100px] px-2 flex flex-col items-center">
@@ -109,7 +119,7 @@ const Home = () => {
                             <div className="text-4xl font-bold">
                                 Who Said Ragers Were Not Meant to Fly?
                             </div>
-                            <p className="text-lg text-foreground text-justify mt-5">
+                            <div className="text-lg text-foreground text-justify mt-5">
                                 <p>Breaking boundaries both in fashion and flight, the Nike Air Jordan 1 x Travis Scott
                                     is more than just a sneaker—it’s a cultural statement. Born from one of the most
                                     iconic collaborations in streetwear history, this silhouette redefines what it means
@@ -120,7 +130,7 @@ const Home = () => {
                                     Swoosh flips the script on tradition, signaling a fearless approach to design that
                                     mirrors Travis Scott’s boundary-pushing artistry.</p>
 
-                            </p>
+                            </div>
                         </div>
                         <div className="flex justify-end rounded-lg overflow-hidden w-full md:w-1/3">
                             <img
@@ -142,7 +152,7 @@ const Home = () => {
                             <div className="text-4xl font-bold">
                                 Unleash Adventure: Discover the New Sneakers Collection
                             </div>
-                            <p className="text-lg text-foreground text-justify mt-5">
+                            <div className="text-lg text-foreground text-justify mt-5">
                                 <p>Our New Sneakers Collection is built for those who don’t just walk — they explore,
                                     chase the horizon, and live for the thrill of the unknown. Whether you&#39;re an
                                     urban adventurer or a trailblazing outdoor enthusiast, these sneakers are the
@@ -151,7 +161,7 @@ const Home = () => {
                                     with cutting-edge design. The breathable mesh uppers keep your feet cool and dry no
                                     matter the conditions, while the reinforced structure provides extra support for
                                     long treks or fast-paced days.</p>
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
