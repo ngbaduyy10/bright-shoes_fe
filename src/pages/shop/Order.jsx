@@ -12,6 +12,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table.jsx";
+import { Skeleton } from "@/components/ui/skeleton.jsx";
 import { Badge } from "@/components/ui/badge.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { useEffect, useState } from "react";
@@ -19,7 +20,6 @@ import { useUser } from "@clerk/clerk-react";
 import { getOrdersByUserId } from "@/services/order.service.js";
 import { dayjsDate } from "@/utils/dayjsConfig.js";
 import OrderDetail from "@/components/OrderDetail.jsx";
-import { LoaderCircle } from "lucide-react";
 import { getStatusColor } from "@/utils/index.js";
 
 const Order = () => {
@@ -56,9 +56,30 @@ const Order = () => {
                 </CardHeader>
                 <CardContent>
                     {loading ? (
-                        <div className="animate-spin flex-center">
-                            <LoaderCircle />
-                        </div>
+                        <Table>
+                            <TableHeader>
+                                <TableRow className="hover:bg-white">
+                                    <TableHead className="font-semibold">Order ID</TableHead>
+                                    <TableHead className="text-center font-semibold">Date</TableHead>
+                                    <TableHead className="text-center font-semibold">Status</TableHead>
+                                    <TableHead className="text-center font-semibold">Total Bill</TableHead>
+                                    <TableHead className="text-center font-semibold">
+                                        <span className="sr-only">Details</span>
+                                    </TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {Array(5).fill(0).map((_, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                                        <TableCell className="text-center"><Skeleton className="h-4 w-20 mx-auto" /></TableCell>
+                                        <TableCell className="text-center"><Skeleton className="h-6 w-20 mx-auto rounded-full" /></TableCell>
+                                        <TableCell className="text-center"><Skeleton className="h-4 w-16 mx-auto" /></TableCell>
+                                        <TableCell className="text-center"><Skeleton className="h-8 w-24 mx-auto rounded-md" /></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
                     ) : (
                         <>
                             {orderList.length === 0 ? (

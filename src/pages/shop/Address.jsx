@@ -1,12 +1,12 @@
 import {Button} from "@/components/ui/button.jsx";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card.jsx";
+import {Skeleton} from "@/components/ui/skeleton.jsx";
+import {Card, CardContent, CardHeader, CardTitle, CardFooter} from "@/components/ui/card.jsx";
 import {useEffect, useState} from "react";
 import AddressDialog from "@/components/AddressDialog.jsx";
 import {useUser} from "@clerk/clerk-react";
 import {addAddress, getAddress, editAddress, deleteAddress} from "@/services/address.service.js";
 import {toast} from "sonner";
 import AddressCard from "@/components/AddressCard.jsx";
-import {LoaderCircle} from "lucide-react";
 
 const Address = () => {
     const { user } = useUser();
@@ -72,14 +72,29 @@ const Address = () => {
 
     return (
         <>
-            <Card>
+            <Card className="min-h-[300px]">
                 <CardHeader>
                     <CardTitle className="text-2xl">Shipping Address</CardTitle>
                 </CardHeader>
                 <CardContent>
                     {loading ? (
-                        <div className="animate-spin flex-center">
-                            <LoaderCircle/>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-2">
+                            {Array(3).fill(0).map((_, index) => (
+                                <Card className="cursor-pointer py-0 gap-0" key={index}>
+                                    <CardContent className="grid p-4 gap-4">
+                                        <Skeleton className="h-4 w-3/4" />
+                                        <Skeleton className="h-4 w-2/3" />
+                                        <Skeleton className="h-4 w-1/2" />
+                                        <Skeleton className="h-4 w-2/3" />
+                                        <Skeleton className="h-4 w-1/3" />
+                                        <Skeleton className="h-4 w-1/2" />
+                                    </CardContent>
+                                    <CardFooter className="pr-3 pb-3 flex justify-end gap-1">
+                                        <Skeleton className="h-9 w-20 rounded-md" />
+                                        <Skeleton className="h-9 w-20 rounded-md" />
+                                    </CardFooter>
+                                </Card>
+                            ))}
                         </div>
                     ) : (
                         <>

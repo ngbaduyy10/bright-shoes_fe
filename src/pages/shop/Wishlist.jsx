@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {getWishlistItems} from "@/services/wishlist.service.js";
 import {useUser} from "@clerk/clerk-react";
 import ItemCard from "@/components/ItemCard.jsx";
-import {LoaderCircle} from "lucide-react";
+import {Skeleton} from "@/components/ui/skeleton.jsx";
 
 const Wishlist = () => {
     const { user } = useUser();
@@ -25,14 +25,22 @@ const Wishlist = () => {
     }, [user]);
 
     return (
-        <Card>
+        <Card className="min-h-[300px]">
             <CardHeader>
                 <CardTitle className="text-2xl">Wishlist Items</CardTitle>
             </CardHeader>
             <CardContent>
                 {loading ? (
-                    <div className="animate-spin flex-center">
-                        <LoaderCircle/>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        {Array(5).fill(0).map((_, index) => (
+                            <div className="cursor-pointer rounded-lg" key={index}>
+                                <div className="overflow-hidden rounded-lg">
+                                    <Skeleton className="h-48 w-full"/>
+                                </div>
+                                <Skeleton className="h-4 w-3/4 mt-2"/>
+                                <Skeleton className="h-4 w-1/4 mt-1"/>
+                            </div>
+                        ))}
                     </div>
                 ) : (
                     <>
