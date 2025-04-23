@@ -4,17 +4,26 @@ import {Input} from "@/components/ui/input.jsx";
 import {Button} from "@/components/ui/button.jsx";
 import {Textarea} from "@/components/ui/textarea.jsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.jsx";
+import UploadImage from "@/components/UploadImage.jsx";
+import {LoaderCircle} from "lucide-react";
 
-const AddItemDialog = ({open, setOpen, formData, setFormData, handleAddItem, handleEditItem}) => {
+const AddItemDialog = ({open, setOpen, formData, setFormData, setImageFile, imageUrl, setImageUrl, handleAddItem, handleEditItem, loading}) => {
     const handleCloseDialog = () => {
         setOpen(false);
         setFormData(null);
+        setImageFile(null);
+        setImageUrl(null);
     }
 
     return (
         <Dialog open={open} onOpenChange={handleCloseDialog}>
             <DialogContent className="flex flex-col gap-4">
                 <div className="text-xl font-semibold">{formData?.id ? "EDIT SHOES" : "ADD NEW SHOES"}</div>
+                <UploadImage
+                    setImageFile={setImageFile}
+                    imageUrl={imageUrl}
+                    setImageUrl={setImageUrl}
+                />
                 <Input
                     type="text"
                     value={formData?.name}
@@ -66,9 +75,15 @@ const AddItemDialog = ({open, setOpen, formData, setFormData, handleAddItem, han
                     </SelectContent>
                 </Select>
                 <div className="flex items-center justify-end gap-1">
-                    <Button variant="outline" className="cursor-pointer" onClick={handleCloseDialog}>Cancel</Button>
-                    <Button className="cursor-pointer" onClick={formData?.id ? handleEditItem : handleAddItem}>
-                        {formData?.id ? "Change" : "Add"}
+                    <Button variant="outline" className="cursor-pointer" disabled={loading} onClick={handleCloseDialog}>Cancel</Button>
+                    <Button className="cursor-pointer w-[60px]" disabled={loading} onClick={formData?.id ? handleEditItem : handleAddItem}>
+                        {loading ? (
+                            <div className="animate-spin flex-center">
+                                <LoaderCircle />
+                            </div>
+                        ) : (
+                            formData?.id ? "Edit" : "Add"
+                        )}
                     </Button>
                 </div>
             </DialogContent>
@@ -81,8 +96,12 @@ AddItemDialog.propTypes = {
     setOpen: propTypes.func,
     formData: propTypes.object,
     setFormData: propTypes.func,
+    setImageFile: propTypes.func,
+    imageUrl: propTypes.string,
+    setImageUrl: propTypes.func,
     handleAddItem: propTypes.func,
     handleEditItem: propTypes.func,
+    loading: propTypes.bool,
 }
 
 export default AddItemDialog;

@@ -1,9 +1,10 @@
 import propTypes from 'prop-types';
 import { Button } from '@/components/ui/button.jsx';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger, AlertDialogDescription } from '@/components/ui/alert-dialog.jsx';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip.jsx';
 import { Pencil, Trash2 } from 'lucide-react';
 
-const AdminItemCard = ({ item, handleEdit }) => {
+const AdminItemCard = ({ item, handleEdit, handleDelete }) => {
     return (
         <div className="cursor-pointer rounded-lg">
             <div className="overflow-hidden rounded-lg">
@@ -24,18 +25,35 @@ const AdminItemCard = ({ item, handleEdit }) => {
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button className="bg-red-500 cursor-pointer hover:bg-red-500">
-                                <Trash2 />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Delete</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
+                <AlertDialog>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <AlertDialogTrigger asChild>
+                                    <Button className="bg-red-500 cursor-pointer hover:bg-red-600">
+                                        <Trash2 />
+                                    </Button>
+                                </AlertDialogTrigger>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Delete</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. It will permanently delete this item.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>
+                            <AlertDialogAction className="cursor-pointer bg-red-500 hover:bg-red-400" onClick={() => handleDelete(item.id)}>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
             </div>
         </div>
     );
@@ -44,6 +62,7 @@ const AdminItemCard = ({ item, handleEdit }) => {
 AdminItemCard.propTypes = {
     item: propTypes.object,
     handleEdit: propTypes.func,
+    handleDelete: propTypes.func,
 }
 
 export default AdminItemCard;
