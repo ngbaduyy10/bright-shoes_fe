@@ -71,28 +71,28 @@ const ShopNavbar = () => {
                             <SheetContent side="left" className="w-[250px]">
                                 <div className="flex flex-col gap-1">
                                     {isSignedIn ? (
-                                        <div className="m-4 flex items-center gap-2">
-                                            <UserButton />
+                                        <div className="m-4 flex items-center gap-2 font-bold text-lg">
+                                            <UserButton afterSignOutUrl="/login" />
                                             {user.fullName}
                                         </div>
                                     ) : (
                                         <div className="mx-4 mt-6"></div>
                                     )}
 
-                                    <div className="navbar-sheet" onClick={() => navigate("/")}>
+                                    <div className="navbar-sheet cursor-pointer" onClick={() => navigate("/")}>
                                         <House/>
                                         <Label className="text-lg font-medium cursor-pointer">Home</Label>
                                     </div>
-                                    <div className="navbar-sheet" onClick={() => navigate("/collection")}>
+                                    <div className="navbar-sheet cursor-pointer" onClick={() => navigate("/collection")}>
                                         <ShoppingBag/>
                                         <Label className="text-lg font-medium cursor-pointer">Collection</Label>
                                     </div>
-                                    <div className="navbar-sheet" onClick={() => navigate("/contact")}>
+                                    <div className="navbar-sheet cursor-pointer" onClick={() => navigate("/contact")}>
                                         <Contact/>
                                         <Label className="text-lg font-medium cursor-pointer">Contact</Label>
                                     </div>
                                     {isSignedIn && (
-                                        <div className="navbar-sheet" onClick={() => navigate("/account")}>
+                                        <div className="navbar-sheet cursor-pointer" onClick={() => navigate("/account")}>
                                             <MessageCirclePlus/>
                                             <Label className="text-lg font-medium cursor-pointer">Account</Label>
                                         </div>
