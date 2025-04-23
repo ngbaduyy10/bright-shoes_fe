@@ -11,7 +11,8 @@ const ShopLayout = () => {
             </main>
             <ShopFooter />
         </div>
-    )
-}
+    );
+};
 
 export default ShopLayout;
+
