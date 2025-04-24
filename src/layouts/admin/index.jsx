@@ -9,7 +9,7 @@ function AdminLayout() {
     return (
         <div className="flex min-h-screen w-full">
             <AdminSidebar open={sidebarOpen} setOpen={setSidebarOpen} />
-            <div className="flex flex-1 flex-col lg:pl-64">
+            <div className="flex flex-1 flex-col lg:pl-64 max-w-screen">
                 <AdminHeader setSidebarOpen={setSidebarOpen} />
                 <main className="flex-1 flex-col flex p-4 md:p-6">
                     <Outlet />
