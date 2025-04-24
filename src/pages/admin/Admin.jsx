@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import {getAdmins} from "@/services/user.service.js";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.jsx";
 import {Skeleton} from "@/components/ui/skeleton.jsx";
-import {dayjsDate} from "@/utils/dayjsConfig.js";
 import {Button} from "@/components/ui/button.jsx";
 import {Badge} from "@/components/ui/badge.jsx";
 import {getAdminRoleColor, getAdminRoleLabel, getGenderColor} from "@/utils/index.js";
@@ -18,6 +17,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog.jsx";
+import dayjs from "dayjs";
 
 const  Admin = () => {
     const [adminList, setAdminList] = useState([]);
@@ -145,9 +145,7 @@ const  Admin = () => {
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="text-center">
-                                            {dayjsDate(
-                                                admin?.registration_date,
-                                            )}
+                                            {dayjs(admin?.registration_date.format("DD-MM-YYYY"))}
                                         </TableCell>
                                         <TableCell className="text-center">
                                             <div className="flex-center gap-1">

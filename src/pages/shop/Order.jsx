@@ -128,7 +128,7 @@ const Order = () => {
                                                     </Badge>
                                                 </TableCell>
                                                 <TableCell className="text-center">
-                                                    ${order?.total_bill}
+                                                    ${order?.discount_bill || order?.total_bill}
                                                 </TableCell>
                                                 <TableCell className="text-center">
                                                     <Button

@@ -83,7 +83,7 @@ const AdminOrder = () => {
                                                     {order?.status.toUpperCase()}
                                                 </Badge>
                                             </TableCell>
-                                            <TableCell className="text-center">${order?.total_bill}</TableCell>
+                                            <TableCell className="text-center">${order?.discount_bill || order?.total_bill}</TableCell>
                                             <TableCell className="text-center">
                                                 <Button className="cursor-pointer" onClick={() => handleViewDetail(order)}>
                                                     View Details

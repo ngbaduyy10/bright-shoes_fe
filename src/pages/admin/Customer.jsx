@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import {getCustomers} from "@/services/user.service.js";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.jsx";
 import {Skeleton} from "@/components/ui/skeleton.jsx";
-import {dayjsDate} from "@/utils/dayjsConfig.js";
 import {Button} from "@/components/ui/button.jsx";
 import {Badge} from "@/components/ui/badge.jsx";
 import {getCustomerMembershipColor, getGenderColor} from "@/utils/index.js";
@@ -16,6 +15,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog.jsx";
+import dayjs from "dayjs";
 
 const Customer = () => {
     const [customerList, setCustomerList] = useState([]);
@@ -136,9 +136,7 @@ const Customer = () => {
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="text-center">
-                                            {dayjsDate(
-                                                customer?.registration_date,
-                                            )}
+                                            {dayjs(customer?.registration_date.format("DD-MM-YYYY"))}
                                         </TableCell>
                                         <TableCell className="text-center">
                                             <div className="flex-center gap-1">
