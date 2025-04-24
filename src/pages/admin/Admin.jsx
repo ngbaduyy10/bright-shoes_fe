@@ -145,7 +145,7 @@ const  Admin = () => {
                                             </Badge>
                                         </TableCell>
                                         <TableCell className="text-center">
-                                            {dayjs(admin?.registration_date.format("DD-MM-YYYY"))}
+                                            {dayjs(admin?.registration_date).format("DD-MM-YYYY")}
                                         </TableCell>
                                         <TableCell className="text-center">
                                             <div className="flex-center gap-1">
