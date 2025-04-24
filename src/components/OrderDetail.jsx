@@ -10,7 +10,6 @@ import { getStatusColor, paymentToString } from "@/utils/index.js";
 
 function OrderDetail({ open, setOpen, order }) {
     const { user } = useUser();
-    console.log(order);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -55,10 +54,13 @@ function OrderDetail({ open, setOpen, order }) {
                                     <OrderItem key={index} item={item} />
                                 ))}
                         </div>
-                        <div className="flex justify-end gap-2">
-                            <span className="font-bold text-lg">Total</span>
-                            <span className="font-bold text-lg">
-                                ${order?.total_bill}
+                        <div className="flex items-center justify-end gap-1">
+                            <span className="font-bold text-xl mr-6">Total</span>
+                            {order?.discount_bill && (
+                                <span className="text-md text-muted-foreground line-through">${order?.total_bill}</span>
+                            )}
+                            <span className="font-bold text-xl">
+                                ${order?.discount_bill || order?.total_bill}
                             </span>
                         </div>
                     </div>
