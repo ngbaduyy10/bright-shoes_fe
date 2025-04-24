@@ -135,6 +135,32 @@ export const getStatusColor = (status) => {
     }
 };
 
+export const getAdminRoleColor = (role) => {
+    switch (role.toLowerCase()) {
+        case 'super_admin':
+            return 'bg-red-500';
+        case 'manager':
+            return 'bg-green-500';
+        case 'staff':
+            return 'bg-yellow-500';
+        default:
+            return 'bg-gray-500';
+    }
+};
+
+export const getCustomerMembershipColor = (membership) => {
+    switch (membership) {
+        case 'premium':
+            return 'bg-green-500';
+        case 'gold':
+            return 'bg-yellow-500';
+        case 'standard':
+            return 'bg-gray-500';
+        default:
+            return 'bg-gray-500';
+    }
+}
+
 export const statusOptions = [
     { id: 'pending', label: 'Pending' },
     { id: 'processing', label: 'Processing' },
@@ -142,3 +168,27 @@ export const statusOptions = [
     { id: 'shipped', label: 'Shipped' },
     { id: 'cancelled', label: 'Cancelled' }
 ];
+
+export const getAdminRoleLabel = (role) => {
+    switch (role) {
+        case "super_admin":
+            return "Admin";
+        case "manager":
+            return "Manager";
+        case "staff":
+            return "Staff";
+        default:
+            return "Admin";
+    }
+}
+
+export const getGenderColor = (gender) =>  {
+    switch (gender) {
+        case "male":
+            return 'bg-blue-500';
+        case "female":
+            return 'bg-pink-500';
+        default:
+            return 'bg-gray-500';
+    }
+}

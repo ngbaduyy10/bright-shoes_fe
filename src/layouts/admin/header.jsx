@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {authCheck} from "@/store/authSlice.js";
 import {useNavigate} from "react-router-dom";
 import default_avatar from "@/assets/default_avatar.avif";
+import {getAdminRoleLabel} from "@/utils/index.js";
 
 function AdminHeader({setSidebarOpen}) {
     const { user } = useSelector(state => state.auth);
@@ -29,7 +30,10 @@ function AdminHeader({setSidebarOpen}) {
             </Button>
             <div className="flex flex-1 justify-end">
                 <div className="flex items-center gap-2">
-                    <div className="font-bold text-xl">{user?.first_name} {user?.last_name}</div>
+                    <div className="flex flex-col items-end">
+                        <div className="font-bold text-lg">{user?.first_name} {user?.last_name}</div>
+                        <div className="text-sm text-gray-500">{getAdminRoleLabel(user?.role)}</div>
+                    </div>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Avatar className="bg-black w-12 h-12">
@@ -47,7 +51,7 @@ function AdminHeader({setSidebarOpen}) {
                                 Account
                             </DropdownMenuItem>
                             <DropdownMenuItem className="cursor-pointer" onClick={handleLogout}>
-                                <LogOut className="mr-2 h-4 w-4"/>
+                                <LogOut className="mr-2 h-4 w-4" color="red"/>
                                 Logout
                             </DropdownMenuItem>
                         </DropdownMenuContent>

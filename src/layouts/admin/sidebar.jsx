@@ -1,4 +1,12 @@
-import {ShoppingBasket, ChartNoAxesCombined, LayoutDashboard, Footprints, User} from "lucide-react";
+import {
+    ShoppingBasket,
+    ChartNoAxesCombined,
+    LayoutDashboard,
+    Footprints,
+    User,
+    TicketPercent,
+    Wallpaper
+} from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet.jsx";
 import PropTypes from "prop-types";
@@ -18,6 +26,12 @@ const adminSidebarMenuItems = [
         icon: <User />,
     },
     {
+        id: "feature",
+        label: "Features",
+        path: "/admin/feature",
+        icon: <Wallpaper />,
+    },
+    {
         id: "shoes",
         label: "Shoes",
         path: "/admin/shoes",
@@ -28,6 +42,12 @@ const adminSidebarMenuItems = [
         label: "Orders",
         path: "/admin/order",
         icon: <ShoppingBasket />,
+    },
+    {
+        id: "discount",
+        label: "Discount",
+        path: "/admin/discount",
+        icon: <TicketPercent />,
     },
 ];
 
@@ -41,7 +61,7 @@ function AdminSideBar({ open, setOpen }) {
                 <SheetContent side="left" className="w-64 bg-primary text-white border-0 rounded-lg">
                     <div className="flex flex-col h-full">
                         <SheetHeader className="flex flex-col justify-center h-[80px] py-5 px-4">
-                            <SheetTitle className="flex items-center gap-2 text-white">
+                            <SheetTitle className="flex items-center gap-3 text-white">
                                 <ChartNoAxesCombined size={28} />
                                 <div className="text-2xl font-extrabold">Admin Panel</div>
                             </SheetTitle>
@@ -72,7 +92,7 @@ function AdminSideBar({ open, setOpen }) {
                 </SheetContent>
             </Sheet>
             <aside className="fixed left-0 top-0 h-full hidden flex-col bg-primary text-white lg:flex w-64 rounded-lg">
-                <div className="flex items-center gap-2 py-5 px-4 mx-1 h-[80px]">
+                <div className="flex items-center gap-3 py-5 px-4 mx-1 h-[80px]">
                     <ChartNoAxesCombined size={28}/>
                     <div className="text-2xl font-extrabold">Admin Panel</div>
                 </div>

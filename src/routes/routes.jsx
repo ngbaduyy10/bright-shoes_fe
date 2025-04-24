@@ -17,6 +17,8 @@ import AdminOrder from "@/pages/admin/Order.jsx";
 import Dashboard from "@/pages/admin/Dashboard.jsx";
 import Shoes from "@/pages/admin/Shoes.jsx";
 import NotFound from "@/pages/NotFound.jsx";
+import Discount from "@/pages/admin/Discount.jsx";
+import Feature from "@/pages/admin/Feature.jsx";
 
 const routes = [
     {
@@ -82,12 +84,20 @@ const routes = [
                         element: <User />
                     },
                     {
+                        path: "/admin/feature",
+                        element: <Feature />
+                    },
+                    {
                         path: "/admin/shoes",
                         element: <Shoes />
                     },
                     {
                         path: "/admin/order",
                         element: <AdminOrder />
+                    },
+                    {
+                        path: "/admin/discount",
+                        element: <Discount />
                     }
                 ]
             }
