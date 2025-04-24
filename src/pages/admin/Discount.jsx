@@ -5,8 +5,16 @@ import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/c
 import {Skeleton} from "@/components/ui/skeleton.jsx";
 import {Badge} from "@/components/ui/badge.jsx";
 import {Button} from "@/components/ui/button.jsx";
-import {CopyPlus} from "lucide-react";
+import {CopyPlus, Lock, Pencil, Trash2} from "lucide-react";
 import dayjs from 'dayjs';
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip.jsx";
+import {
+    AlertDialog, AlertDialogAction, AlertDialogCancel,
+    AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog.jsx";
 
 const Discount = () => {
     const [discountList, setDiscountList] = useState([]);
@@ -110,8 +118,12 @@ const Discount = () => {
                                     <TableRow key={discount.id}>
                                         <TableCell className="text-center">{discount.code}</TableCell>
                                         <TableCell className="text-center">{discount.name}</TableCell>
-                                        <TableCell className="text-center">{discount.description}</TableCell>
-                                        <TableCell className="text-center capitalize">{discount.discount_type}</TableCell>
+                                        <TableCell>{discount.description}</TableCell>
+                                        <TableCell className="text-center capitalize">
+                                            <Badge className={discount.discount_type === "percent" ? "bg-blue-500" : "bg-yellow-500"}>
+                                                {discount.discount_type}
+                                            </Badge>
+                                        </TableCell>
                                         <TableCell className="text-center">
                                             {discount.discount_type === "percent"
                                                 ? `${discount.percentage_value}%`
@@ -139,10 +151,71 @@ const Discount = () => {
                                                 {discount.status}
                                             </Badge>
                                         </TableCell>
-                                        <TableCell className="text-center">
-                                            <Button className="cursor-pointer">
-                                                View Details
-                                            </Button>
+                                        <TableCell className="text-center pl-6">
+                                            <div className="flex-center gap-1">
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <Button
+                                                                className="cursor-pointer bg-white text-black hover:bg-primary hover:text-white border">
+                                                                <Pencil/>
+                                                            </Button>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            <p>Edit</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <Button
+                                                                className="cursor-pointer bg-white text-black hover:bg-primary hover:text-white border">
+                                                                <Lock/>
+                                                            </Button>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            <p>Inactive</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+
+                                                <AlertDialog>
+                                                    <TooltipProvider>
+                                                        <Tooltip>
+                                                            <TooltipTrigger asChild>
+                                                                <AlertDialogTrigger asChild>
+                                                                    <Button
+                                                                        className="cursor-pointer bg-white text-black hover:bg-primary hover:text-white border">
+                                                                        <Trash2/>
+                                                                    </Button>
+                                                                </AlertDialogTrigger>
+                                                            </TooltipTrigger>
+                                                            <TooltipContent>
+                                                                <p>Delete</p>
+                                                            </TooltipContent>
+                                                        </Tooltip>
+                                                    </TooltipProvider>
+
+                                                    <AlertDialogContent>
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>Are you absolutely
+                                                                sure?</AlertDialogTitle>
+                                                            <AlertDialogDescription>
+                                                                This action cannot be undone. It will permanently delete
+                                                                this voucher.
+                                                            </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel
+                                                                className="cursor-pointer">Cancel</AlertDialogCancel>
+                                                            <AlertDialogAction
+                                                                className="cursor-pointer bg-red-500 hover:bg-red-400">Continue</AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 ))}

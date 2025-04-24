@@ -7,7 +7,17 @@ import {Button} from "@/components/ui/button.jsx";
 import {Badge} from "@/components/ui/badge.jsx";
 import {getAdminRoleColor, getAdminRoleLabel, getGenderColor} from "@/utils/index.js";
 import {Input} from "@/components/ui/input.jsx";
-import {CopyPlus} from "lucide-react";
+import {CopyPlus, Pencil, Trash2, Lock} from "lucide-react";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip.jsx";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog.jsx";
 
 const  Admin = () => {
     const [adminList, setAdminList] = useState([]);
@@ -140,9 +150,70 @@ const  Admin = () => {
                                             )}
                                         </TableCell>
                                         <TableCell className="text-center">
-                                            <Button className="cursor-pointer">
-                                                View Details
-                                            </Button>
+                                            <div className="flex-center gap-1">
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <Button
+                                                                className="cursor-pointer bg-white text-black hover:bg-primary hover:text-white border">
+                                                                <Pencil/>
+                                                            </Button>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            <p>Edit</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+
+                                                <TooltipProvider>
+                                                    <Tooltip>
+                                                        <TooltipTrigger asChild>
+                                                            <Button
+                                                                className="cursor-pointer bg-white text-black hover:bg-primary hover:text-white border">
+                                                                <Lock/>
+                                                            </Button>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent>
+                                                            <p>Inactive</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                </TooltipProvider>
+
+                                                <AlertDialog>
+                                                    <TooltipProvider>
+                                                        <Tooltip>
+                                                            <TooltipTrigger asChild>
+                                                                <AlertDialogTrigger asChild>
+                                                                    <Button
+                                                                        className="cursor-pointer bg-white text-black hover:bg-primary hover:text-white border">
+                                                                        <Trash2/>
+                                                                    </Button>
+                                                                </AlertDialogTrigger>
+                                                            </TooltipTrigger>
+                                                            <TooltipContent>
+                                                                <p>Delete</p>
+                                                            </TooltipContent>
+                                                        </Tooltip>
+                                                    </TooltipProvider>
+
+                                                    <AlertDialogContent>
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>Are you absolutely
+                                                                sure?</AlertDialogTitle>
+                                                            <AlertDialogDescription>
+                                                                This action cannot be undone. It will permanently delete
+                                                                this voucher.
+                                                            </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel
+                                                                className="cursor-pointer">Cancel</AlertDialogCancel>
+                                                            <AlertDialogAction
+                                                                className="cursor-pointer bg-red-500 hover:bg-red-400">Continue</AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 ))}
