@@ -23,76 +23,66 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        try {
-            const fetchOrders = async () => {
-                const response = await getAllOrders();
-                if (response.success) {
-                    const orders = response.data;
-                    setTotalRevenue(orders.reduce((acc, order) => {
-                        if (order.status === "cancelled") {
-                            return acc;
-                        }
-                        if (order.discount_bill) {
-                            return acc + parseInt(order.discount_bill);
-                        }
-                        return acc + parseInt(order.total_bill);
-                    }, 0));
+        const fetchAllData = async () => {
+            try {
+                const [ordersRes, productsRes, customersRes, weeklyRes, categoryRes, statusRes] = await Promise.all([
+                    getAllOrders(),
+                    getShoes(),
+                    getCustomers(),
+                    getWeeklyRevenue(),
+                    getCategoryData(),
+                    getStatusData()
+                ]);
+
+                // Orders
+                if (ordersRes.success) {
+                    const orders = ordersRes.data;
+                    setTotalRevenue(
+                        orders.reduce((acc, order) => {
+                            if (order.status === "cancelled") return acc;
+                            return acc + parseInt(order.discount_bill || order.total_bill);
+                        }, 0)
+                    );
                     setTotalOrders(orders.length);
                 }
-            }
 
-            const fetchProducts = async () => {
-                const response = await getShoes();
-                if (response.success) {
-                    const products = response.data;
-                    setTotalProducts(products.length);
+                // Products
+                if (productsRes.success) {
+                    setTotalProducts(productsRes.data.length);
                 }
-            }
 
-            const fetchCustomers = async () => {
-                const response = await getCustomers();
-                if (response.success) {
-                    const customers = response.data;
-                    setTotalCustomers(customers.length);
+                // Customers
+                if (customersRes.success) {
+                    setTotalCustomers(customersRes.data.length);
                 }
-            }
 
-            const fetchWeeklyRevenue = async () => {
-                const response = await getWeeklyRevenue();
-                if (response.success) {
-                    setWeeklyRevenue(response.data);
+                // Weekly Revenue
+                if (weeklyRes.success) {
+                    setWeeklyRevenue(weeklyRes.data);
                 }
-            }
 
-            const fetchCategoryData = async () => {
-                const response = await getCategoryData();
-                if (response.success) {
-                    let data = {};
-                    response.data.forEach((item) => {
-                        data[item.name] = item.count;
-                    })
-                    setCategoryData(data);
+                // Category Data
+                if (categoryRes.success) {
+                    const catData = {};
+                    categoryRes.data.forEach(item => {
+                        catData[item.name] = item.count;
+                    });
+                    setCategoryData(catData);
                 }
-            }
 
-            const fetchOrderStatusData = async () => {
-                const response = await getStatusData();
-                if (response.success) {
-                    setOrderStatusData(response.data);
+                // Order Status Data
+                if (statusRes.success) {
+                    setOrderStatusData(statusRes.data);
                 }
-            }
 
-            fetchOrders();
-            fetchProducts();
-            fetchCustomers();
-            fetchWeeklyRevenue();
-            fetchCategoryData();
-            fetchOrderStatusData();
-        } catch (error) {
-            console.error("Error fetching data", error);
-        } finally {
-            setLoading(false);
-        }
+            } catch (error) {
+                console.error("Failed to fetch dashboard data", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAllData();
     }, []);
 
     return (
