@@ -9,12 +9,12 @@ import {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const data = {
-    labels: ['Sneakers', 'Sandals', 'Boots', 'Loafers'],
+    labels: ['Men', 'Women', 'Kids'],
     datasets: [
         {
             label: 'Sales',
-            data: [500, 300, 200, 100],
-            backgroundColor: ['#0179FE', '#15002e', '#8892d6', '#d0d5f7'],
+            data: [500, 200, 100],
+            backgroundColor: ['#0179FE', '#15002e', '#d0d5f7'],
             borderWidth: 1,
         },
     ],

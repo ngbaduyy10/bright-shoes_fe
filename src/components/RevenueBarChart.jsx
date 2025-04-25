@@ -21,7 +21,7 @@ const RevenueBarChart = () => {
             {
                 label: 'Revenue',
                 data: [12000, 19000, 3000, 5000, 2000, 30000, 4500],
-                backgroundColor: '#15002e', // Dark purple
+                backgroundColor: '#8892d6', // Dark purple
                 borderColor: '#f4f7ff', // Light blue border
                 borderWidth: 1,
             },
