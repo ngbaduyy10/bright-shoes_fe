@@ -41,8 +41,8 @@ const AdminOrderDetail = ({ open, setOpen, order, reload, setReload }) => {
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="sm:max-w-[650px] px-1">
-                <div className="flex flex-col gap-5 max-h-[600px] overflow-y-auto px-4">
+            <DialogContent className="sm:max-w-[650px] px-1 py-8">
+                <div className="flex flex-col gap-5 max-h-[540px] overflow-y-auto px-4">
                     <div className="flex flex-col gap-1">
                         <div className="flex mt-6 items-center justify-between">
                             <p className="font-medium">Order ID</p>
