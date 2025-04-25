@@ -41,3 +41,13 @@ export const updateOrderStatus = async (orderId, data) => {
     );
     return response.data;
 }
+
+export const getWeeklyRevenue = async () => {
+    const response = await axios.get(`${BASE_URL}/order/revenue/weekly`);
+    return response.data;
+}
+
+export const getStatusData = async () => {
+    const response = await axios.get(`${BASE_URL}/order/status/data`);
+    return response.data;
+}

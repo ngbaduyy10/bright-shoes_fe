@@ -5,18 +5,19 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import propTypes from "prop-types";
 
 // Register chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const OrderStatusPieChart = () => {
+const OrderStatusPieChart = ({ chartData }) => {
     // Sample data
     const data = {
         labels: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
         datasets: [
             {
                 label: '# of Orders',
-                data: [12, 19, 3, 5, 2],
+                data: Object.values(chartData),
                 backgroundColor: [
                     '#15002e', // Dark purple
                     '#2b014f', // Slightly lighter
@@ -55,5 +56,9 @@ const OrderStatusPieChart = () => {
         </div>
     );
 };
+
+OrderStatusPieChart.propTypes = {
+    chartData: propTypes.array,
+}
 
 export default OrderStatusPieChart;

@@ -5,7 +5,6 @@ import {
     Footprints,
     User,
     TicketPercent,
-    Wallpaper
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet.jsx";
@@ -25,12 +24,12 @@ const adminSidebarMenuItems = [
         path: "/admin/user",
         icon: <User />,
     },
-    {
-        id: "feature",
-        label: "Features",
-        path: "/admin/feature",
-        icon: <Wallpaper />,
-    },
+    // {
+    //     id: "feature",
+    //     label: "Features",
+    //     path: "/admin/feature",
+    //     icon: <Wallpaper />,
+    // },
     {
         id: "shoes",
         label: "Shoes",

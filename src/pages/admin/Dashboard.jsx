@@ -5,16 +5,20 @@ import CategoryDoughnutChart from "@/components/CategoryDoughnutChart.jsx";
 import {Card, CardContent} from "@/components/ui/card.jsx";
 import {HandCoins, ShoppingCart, User, CreditCard} from "lucide-react";
 import {useEffect, useState} from "react";
-import {getAllOrders} from "@/services/order.service.js";
+import {getAllOrders, getStatusData, getWeeklyRevenue} from "@/services/order.service.js";
 import {getShoes} from "@/services/shoes.service.js";
 import {getCustomers} from "@/services/user.service.js";
 import NumberCounter from "@/components/NumberCounter.jsx";
+import {getCategoryData} from "@/services/category.service.js";
 
 const Dashboard = () => {
     const [totalRevenue, setTotalRevenue] = useState(0);
     const [totalOrders, setTotalOrders] = useState(0);
     const [totalCustomers, setTotalCustomers] = useState(0);
     const [totalProducts, setTotalProducts] = useState(0);
+    const [weeklyRevenue, setWeeklyRevenue] = useState([]);
+    const [categoryData, setCategoryData] = useState([]);
+    const [orderStatusData, setOrderStatusData] = useState([]);
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -50,9 +54,37 @@ const Dashboard = () => {
             }
         }
 
+        const fetchWeeklyRevenue = async () => {
+           const response = await getWeeklyRevenue();
+           if (response.success) {
+               setWeeklyRevenue(response.data);
+           }
+        }
+
+        const fetchCategoryData = async () => {
+            const response = await getCategoryData();
+            if (response.success) {
+                let data = {};
+                response.data.forEach((item) => {
+                  data[item.name] = item.count;
+                })
+                setCategoryData(data);
+            }
+        }
+
+        const fetchOrderStatusData = async () => {
+            const response = await getStatusData();
+            if (response.success) {
+                setOrderStatusData(response.data);
+            }
+        }
+
         fetchOrders();
         fetchProducts();
         fetchCustomers();
+        fetchWeeklyRevenue();
+        fetchCategoryData();
+        fetchOrderStatusData();
     }, []);
 
     return (
@@ -113,15 +145,15 @@ const Dashboard = () => {
             </div>
             <div className="grid grid-cols-3 gap-4 flex items-center">
             <div className="col-span-2">
-                    <RevenueBarChart />
+                    <RevenueBarChart chartData={weeklyRevenue} />
                 </div>
                 <div className="col-span-1">
-                    <OrderStatusPieChart/>
+                    <OrderStatusPieChart chartData={orderStatusData} />
                 </div>
             </div>
             <div className="grid grid-cols-3 gap-4 flex items-center">
                 <div className="col-span-1">
-                    <CategoryDoughnutChart />
+                    <CategoryDoughnutChart chartData={categoryData} />
                 </div>
                 <div className="col-span-2">
                     <CustomerLineChart/>

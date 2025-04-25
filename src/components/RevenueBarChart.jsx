@@ -8,19 +8,18 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import propTypes from "prop-types";
 
 // Register chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const RevenueBarChart = () => {
-    // Sample data
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const RevenueBarChart = ({ chartData }) => {
     const data = {
-        labels,
+        labels : chartData.map(item => item.week_start_date),
         datasets: [
             {
                 label: 'Revenue',
-                data: [12000, 19000, 3000, 5000, 2000, 30000, 4500],
+                data: chartData.map(item => item.total),
                 backgroundColor: '#8892d6', // Dark purple
                 borderColor: '#f4f7ff', // Light blue border
                 borderWidth: 1,
@@ -38,7 +37,7 @@ const RevenueBarChart = () => {
             },
             title: {
                 display: true,
-                text: 'Revenue Over Months',
+                text: 'Revenue Over Weeks',
                 color: '#15002e',
                 font: {
                     size: 18,
@@ -64,5 +63,9 @@ const RevenueBarChart = () => {
         </div>
     );
 };
+
+RevenueBarChart.propTypes = {
+    chartData: propTypes.array,
+}
 
 export default RevenueBarChart;
