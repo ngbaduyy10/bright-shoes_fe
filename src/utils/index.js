@@ -125,9 +125,9 @@ export const getStatusColor = (status) => {
         case 'processing':
             return 'bg-blue-500';
         case 'delivered':
-            return 'bg-purple-500';
-        case 'shipped':
             return 'bg-green-500';
+        case 'shipped':
+            return 'bg-purple-500';
         case 'cancelled':
             return 'bg-red-500';
         default:
