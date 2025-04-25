@@ -10,6 +10,7 @@ import {getShoes} from "@/services/shoes.service.js";
 import {getCustomers} from "@/services/user.service.js";
 import NumberCounter from "@/components/NumberCounter.jsx";
 import {getCategoryData} from "@/services/category.service.js";
+import {Skeleton} from "@/components/ui/skeleton.jsx";
 
 const Dashboard = () => {
     const [totalRevenue, setTotalRevenue] = useState(0);
@@ -19,147 +20,217 @@ const Dashboard = () => {
     const [weeklyRevenue, setWeeklyRevenue] = useState([]);
     const [categoryData, setCategoryData] = useState([]);
     const [orderStatusData, setOrderStatusData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchOrders = async () => {
-            const response = await getAllOrders();
-            if (response.success) {
-                const orders = response.data;
-                setTotalRevenue(orders.reduce((acc, order) => {
-                    if (order.status === "cancelled") {
-                        return acc;
-                    }
-                    if (order.discount_bill) {
-                        return acc + parseInt(order.discount_bill);
-                    }
-                    return acc + parseInt(order.total_bill);
-                }, 0));
-                setTotalOrders(orders.length);
+        try {
+            const fetchOrders = async () => {
+                const response = await getAllOrders();
+                if (response.success) {
+                    const orders = response.data;
+                    setTotalRevenue(orders.reduce((acc, order) => {
+                        if (order.status === "cancelled") {
+                            return acc;
+                        }
+                        if (order.discount_bill) {
+                            return acc + parseInt(order.discount_bill);
+                        }
+                        return acc + parseInt(order.total_bill);
+                    }, 0));
+                    setTotalOrders(orders.length);
+                }
             }
-        }
 
-        const fetchProducts = async () => {
-            const response = await getShoes();
-            if (response.success) {
-                const products = response.data;
-                setTotalProducts(products.length);
+            const fetchProducts = async () => {
+                const response = await getShoes();
+                if (response.success) {
+                    const products = response.data;
+                    setTotalProducts(products.length);
+                }
             }
-        }
 
-        const fetchCustomers = async () => {
-            const response = await getCustomers();
-            if (response.success) {
-                const customers = response.data;
-                setTotalCustomers(customers.length);
+            const fetchCustomers = async () => {
+                const response = await getCustomers();
+                if (response.success) {
+                    const customers = response.data;
+                    setTotalCustomers(customers.length);
+                }
             }
-        }
 
-        const fetchWeeklyRevenue = async () => {
-           const response = await getWeeklyRevenue();
-           if (response.success) {
-               setWeeklyRevenue(response.data);
-           }
-        }
-
-        const fetchCategoryData = async () => {
-            const response = await getCategoryData();
-            if (response.success) {
-                let data = {};
-                response.data.forEach((item) => {
-                  data[item.name] = item.count;
-                })
-                setCategoryData(data);
+            const fetchWeeklyRevenue = async () => {
+                const response = await getWeeklyRevenue();
+                if (response.success) {
+                    setWeeklyRevenue(response.data);
+                }
             }
-        }
 
-        const fetchOrderStatusData = async () => {
-            const response = await getStatusData();
-            if (response.success) {
-                setOrderStatusData(response.data);
+            const fetchCategoryData = async () => {
+                const response = await getCategoryData();
+                if (response.success) {
+                    let data = {};
+                    response.data.forEach((item) => {
+                        data[item.name] = item.count;
+                    })
+                    setCategoryData(data);
+                }
             }
-        }
 
-        fetchOrders();
-        fetchProducts();
-        fetchCustomers();
-        fetchWeeklyRevenue();
-        fetchCategoryData();
-        fetchOrderStatusData();
+            const fetchOrderStatusData = async () => {
+                const response = await getStatusData();
+                if (response.success) {
+                    setOrderStatusData(response.data);
+                }
+            }
+
+            fetchOrders();
+            fetchProducts();
+            fetchCustomers();
+            fetchWeeklyRevenue();
+            fetchCategoryData();
+            fetchOrderStatusData();
+        } catch (error) {
+            console.error("Error fetching data", error);
+        } finally {
+            setLoading(false);
+        }
     }, []);
 
     return (
-        <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-4 gap-4">
-                <Card className="bg-white rounded-[30px]">
-                    <CardContent>
-                        <div className="flex-between">
-                            <h2 className="text-lg text-muted-foreground">Total Revenue</h2>
-                            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-teal-100/50">
-                                <HandCoins className="text-teal-600 w-6 h-6"/>
+        <>
+            {loading ? (
+                <div className="flex flex-col gap-4">
+                    {/* Stat Cards Skeleton */}
+                    <div className="grid grid-cols-4 gap-4">
+                        {Array.from({ length: 4 }).map((_, idx) => (
+                            <Card className="bg-white rounded-[30px]" key={idx}>
+                                <CardContent className="space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <div className="space-y-2">
+                                            <Skeleton className="h-4 w-24" />
+                                        </div>
+                                        <Skeleton className="w-12 h-12 rounded-full" />
+                                    </div>
+                                    <Skeleton className="h-8 w-28 mt-2" />
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+
+                    {/* Revenue + Pie Chart Skeleton */}
+                    <div className="grid grid-cols-3 gap-4 items-center">
+                        <div className="col-span-2">
+                            <div className="bg-white rounded-[30px] h-[300px]">
+                                <div className="h-full flex items-center justify-center">
+                                    <Skeleton className="w-full h-full" />
+                                </div>
                             </div>
                         </div>
-                        <div className="text-3xl font-bold mt-2">
-                            <NumberCounter amount={totalRevenue} prefix="$" />
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card className="bg-white rounded-[30px]">
-                    <CardContent>
-                        <div className="flex-between">
-                            <h2 className="text-lg text-muted-foreground">Total Orders</h2>
-                            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-100/50">
-                                <ShoppingCart className="text-blue-700 w-6 h-6" />
+                        <div className="col-span-1">
+                            <div className="bg-white rounded-[30px] h-[300px]">
+                                <div className="h-full flex items-center justify-center">
+                                    <Skeleton className="w-full h-full" />
+                                </div>
                             </div>
                         </div>
-                        <div className="text-3xl font-bold mt-2">
-                            <NumberCounter amount={totalOrders} />
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card className="bg-white rounded-[30px]">
-                    <CardContent>
-                        <div className="flex-between">
-                            <h2 className="text-lg text-muted-foreground">Total Customers</h2>
-                            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-green-100/50">
-                                <User className="text-green-600 w-6 h-6" />
+                    </div>
+
+                    {/* Doughnut + Line Chart Skeleton */}
+                    <div className="grid grid-cols-3 gap-4 items-center">
+                        <div className="col-span-1">
+                            <div className="bg-white rounded-[30px] h-[300px]">
+                                <div className="h-full flex items-center justify-center">
+                                    <Skeleton className="w-full h-full" />
+                                </div>
                             </div>
                         </div>
-                        <div className="text-3xl font-bold mt-2">
-                            <NumberCounter amount={totalCustomers} />
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card className="bg-white rounded-[30px]">
-                    <CardContent>
-                        <div className="flex-between">
-                            <h2 className="text-lg text-muted-foreground">Total Products</h2>
-                            <div className="w-12 h-12 flex items-center justify-center rounded-full bg-yellow-100/50">
-                                <CreditCard className="text-yellow-700 w-6 h-6" />
+                        <div className="col-span-2">
+                            <div className="bg-white rounded-[30px] h-[300px]">
+                                <div className="h-full flex items-center justify-center">
+                                    <Skeleton className="w-full h-full" />
+                                </div>
                             </div>
                         </div>
-                        <div className="text-3xl font-bold mt-2">
-                            <NumberCounter amount={totalProducts} />
+                    </div>
+                </div>
+            ) : (
+                <div className="flex flex-col gap-4">
+                    <div className="grid grid-cols-4 gap-4">
+                        <Card className="bg-white rounded-[30px]">
+                            <CardContent>
+                                <div className="flex-between">
+                                    <h2 className="text-lg text-muted-foreground">Total Revenue</h2>
+                                    <div
+                                        className="w-12 h-12 flex items-center justify-center rounded-full bg-teal-100/50">
+                                        <HandCoins className="text-teal-600 w-6 h-6"/>
+                                    </div>
+                                </div>
+                                <div className="text-3xl font-bold mt-2">
+                                    <NumberCounter amount={totalRevenue} prefix="$"/>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card className="bg-white rounded-[30px]">
+                            <CardContent>
+                                <div className="flex-between">
+                                    <h2 className="text-lg text-muted-foreground">Total Orders</h2>
+                                    <div
+                                        className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-100/50">
+                                        <ShoppingCart className="text-blue-700 w-6 h-6"/>
+                                    </div>
+                                </div>
+                                <div className="text-3xl font-bold mt-2">
+                                    <NumberCounter amount={totalOrders}/>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card className="bg-white rounded-[30px]">
+                            <CardContent>
+                                <div className="flex-between">
+                                    <h2 className="text-lg text-muted-foreground">Total Customers</h2>
+                                    <div
+                                        className="w-12 h-12 flex items-center justify-center rounded-full bg-green-100/50">
+                                        <User className="text-green-600 w-6 h-6"/>
+                                    </div>
+                                </div>
+                                <div className="text-3xl font-bold mt-2">
+                                    <NumberCounter amount={totalCustomers}/>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card className="bg-white rounded-[30px]">
+                            <CardContent>
+                                <div className="flex-between">
+                                    <h2 className="text-lg text-muted-foreground">Total Products</h2>
+                                    <div
+                                        className="w-12 h-12 flex items-center justify-center rounded-full bg-yellow-100/50">
+                                        <CreditCard className="text-yellow-700 w-6 h-6"/>
+                                    </div>
+                                </div>
+                                <div className="text-3xl font-bold mt-2">
+                                    <NumberCounter amount={totalProducts}/>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4 flex items-center">
+                        <div className="col-span-2">
+                            <RevenueBarChart chartData={weeklyRevenue}/>
                         </div>
-                    </CardContent>
-                </Card>
-            </div>
-            <div className="grid grid-cols-3 gap-4 flex items-center">
-            <div className="col-span-2">
-                    <RevenueBarChart chartData={weeklyRevenue} />
+                        <div className="col-span-1">
+                            <OrderStatusPieChart chartData={orderStatusData}/>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-4 flex items-center">
+                        <div className="col-span-1">
+                            <CategoryDoughnutChart chartData={categoryData}/>
+                        </div>
+                        <div className="col-span-2">
+                            <CustomerLineChart/>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-span-1">
-                    <OrderStatusPieChart chartData={orderStatusData} />
-                </div>
-            </div>
-            <div className="grid grid-cols-3 gap-4 flex items-center">
-                <div className="col-span-1">
-                    <CategoryDoughnutChart chartData={categoryData} />
-                </div>
-                <div className="col-span-2">
-                    <CustomerLineChart/>
-                </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 }
 

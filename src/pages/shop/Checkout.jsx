@@ -120,13 +120,13 @@ const Checkout = () => {
                             )}
                             <span className="font-bold text-2xl">${discountPrice?.toFixed(1) || totalPrice.toFixed(1)}</span>
                         </div>
-                        <div className="flex flex-col gap-1">
-                        <div className="text-lg">Payment Method</div>
-                            <div className="flex items-center gap-2">
-                                <Button variant="outline" className="h-[50px] cursor-pointer">Stripe</Button>
-                                <Button variant="outline" className="h-[50px] cursor-pointer">Cash on Delivery</Button>
-                            </div>
-                        </div>
+                        {/*<div className="flex flex-col gap-1">*/}
+                        {/*<div className="text-lg">Payment Method</div>*/}
+                        {/*    <div className="flex items-center gap-2">*/}
+                        {/*        <Button variant="outline" className="h-[50px] cursor-pointer">Stripe</Button>*/}
+                        {/*        <Button variant="outline" className="h-[50px] cursor-pointer">Cash on Delivery</Button>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                         <Button className="w-full mt-2 cursor-pointer" onClick={handleOrder} disabled={loading}>
                             {loading ? (
                                 <div className="animate-spin">
