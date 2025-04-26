@@ -24,8 +24,16 @@ export const orderCheck = async (data) => {
     return response.data;
 }
 
-export const getAllOrders = async () => {
-    const response = await axios.get(`${BASE_URL}/order`);
+export const getAllOrders = async (data) => {
+    const response = await axios.get(
+        `${BASE_URL}/order`,
+        {
+            params: {
+                status: data?.status,
+                keyword: data?.keyword,
+            }
+        }
+    );
     return response.data;
 }
 
