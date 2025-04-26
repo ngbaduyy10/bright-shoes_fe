@@ -1,7 +1,8 @@
-import { Menu, ShoppingCart, House, ShoppingBag, Contact, MessageCirclePlus, LoaderCircle } from "lucide-react";
+import { Menu, ShoppingCart, House, ShoppingBag, Contact, MessageCirclePlus } from "lucide-react";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet.jsx";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { UserButton, useUser } from '@clerk/clerk-react';
 import {useSelector} from "react-redux";
@@ -123,9 +124,7 @@ const ShopNavbar = () => {
                                 )}
                             </>
                         ) : (
-                            <div className="animate-spin">
-                                <LoaderCircle />
-                            </div>
+                            <Skeleton className="w-[2.6rem] h-[2.6rem] rounded-full" />
                         )}
                     </div>
                 </div>

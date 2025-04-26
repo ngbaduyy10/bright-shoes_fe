@@ -250,7 +250,7 @@ const Detail = () => {
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                             <div className="flex items-center gap-0.5">
-                                <StarRating rating={avgRating}/>
+                                <StarRating rating={item?.rating}/>
                             </div>
                             <span className="text-muted-foreground">
                             {avgRating?.toFixed(1) || 0} ({reviews.length} reviews)

@@ -29,6 +29,7 @@ import {getDiscountByOrderValue} from "@/services/discount.service.js";
 import {Card, CardContent} from "@/components/ui/card.jsx";
 import dayjs from "dayjs";
 import {convertDate} from "@/utils/dayjsConfig.js";
+import stripe_logo from "@/assets/stripe_logo.png";
 
 const Checkout = () => {
     const { user } = useUser();
@@ -44,6 +45,7 @@ const Checkout = () => {
     const [discountList, setDiscountList] = useState([]);
     const [selectedDiscount, setSelectedDiscount] = useState(null);
     const [discountPrice, setDiscountPrice] = useState(null);
+    const [method, setMethod] = useState('cod');
 
     useEffect(() => {
         const fetchAddress = async () => {
@@ -109,7 +111,7 @@ const Checkout = () => {
             <div className="flex justify-center w-full px-2 my-10">
                 <div className=" flex flex-col md:flex-row gap-10 container">
                     <div className="flex flex-col gap-4 md:w-2/3">
-                        <div className="text-xl font-semibold">ORDER TOTALS</div>
+                        <div className="text-2xl font-semibold">ORDER TOTALS</div>
                         {cartItems.map((item) => (
                             <OrderItem key={item.shoes_id} item={item}/>
                         ))}
@@ -120,13 +122,22 @@ const Checkout = () => {
                             )}
                             <span className="font-bold text-2xl">${discountPrice?.toFixed(1) || totalPrice.toFixed(1)}</span>
                         </div>
-                        {/*<div className="flex flex-col gap-1">*/}
-                        {/*<div className="text-lg">Payment Method</div>*/}
-                        {/*    <div className="flex items-center gap-2">*/}
-                        {/*        <Button variant="outline" className="h-[50px] cursor-pointer">Stripe</Button>*/}
-                        {/*        <Button variant="outline" className="h-[50px] cursor-pointer">Cash on Delivery</Button>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                        <div className="flex flex-col gap-1">
+                        <div className="text-xl font-semibold">Payment Method</div>
+                            <div className="flex items-center gap-2">
+                                <div onClick={() => setMethod('stripe')}
+                                     className="flex items-center gap-3 border py-4 px-3 cursor-pointer rounded-lg">
+                                    <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'stripe' ? 'bg-green-400' : ''}`}></p>
+                                    <img className="h-5 mx-4" src={stripe_logo} alt=""/>
+                                </div>
+
+                                <div onClick={() => setMethod('cod')}
+                                     className="flex items-center gap-3 border py-4 px-3 cursor-pointer rounded-lg">
+                                    <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'cod' ? 'bg-green-400' : ''}`}></p>
+                                    <p className="text-gray-500 text-sm font-medium mx-4">CASH ON DELIVERY</p>
+                                </div>
+                            </div>
+                        </div>
                         <Button className="w-full mt-2 cursor-pointer" onClick={handleOrder} disabled={loading}>
                             {loading ? (
                                 <div className="animate-spin">
@@ -232,7 +243,10 @@ const Checkout = () => {
                                             <div className="space-y-1">
                                                 <h3 className="text-2xl font-bold">{selectedDiscount.name}</h3>
                                                 <p className="text-sm text-foreground">{selectedDiscount.description}</p>
-                                                <p className="text-xs text-foreground mt-1">
+                                                <p className="text-xs text-foreground mt-1 mb-0">
+                                                    Minimum order value: ${selectedDiscount.min_order_value}
+                                                </p>
+                                                <p className="text-xs text-foreground">
                                                     Use by {convertDate(dayjs(selectedDiscount.end_date).format("DD/MM/YYYY"))}
                                                 </p>
                                             </div>
