@@ -172,7 +172,7 @@ export const statusOptions = [
 export const getAdminRoleLabel = (role) => {
     switch (role) {
         case "super_admin":
-            return "Admin";
+            return "Super Admin";
         case "manager":
             return "Manager";
         case "staff":

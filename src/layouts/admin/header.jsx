@@ -37,7 +37,11 @@ function AdminHeader({setSidebarOpen}) {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Avatar className="bg-black w-12 h-12">
-                                <AvatarImage src={default_avatar} alt="avatar" className="bg-white cursor-pointer" />
+                                {user?.image_url ? (
+                                    <AvatarImage src={user?.image_url} alt="avatar" className="bg-white cursor-pointer" />
+                                ) : (
+                                    <AvatarImage src={default_avatar} alt="avatar" className="bg-white cursor-pointer" />
+                                )}
                                 <AvatarFallback className="bg-primary text-white font-extrabold cursor-pointer">
                                     {user?.first_name[0].toUpperCase()}
                                 </AvatarFallback>

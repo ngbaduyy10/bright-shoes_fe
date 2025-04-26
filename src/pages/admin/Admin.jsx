@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {getAdmins} from "@/services/user.service.js";
+import {createAdmin, getAdmins, updateAdmin} from "@/services/user.service.js";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table.jsx";
 import {Skeleton} from "@/components/ui/skeleton.jsx";
 import {Button} from "@/components/ui/button.jsx";
@@ -18,15 +18,24 @@ import {
     AlertDialogTrigger
 } from "@/components/ui/alert-dialog.jsx";
 import dayjs from "dayjs";
+import AddAdminDialog from "@/components/AddAdminDialog.jsx";
+import {toast} from "sonner";
 
 const  Admin = () => {
     const [adminList, setAdminList] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState(null);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [imageFile, setImageFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [dialogLoading, setDialogLoading] = useState(false);
+    const [reload, setReload] = useState(false);
+    const [keyword, setKeyword] = useState("");
 
     useEffect(() => {
         const fetchAdminList = async () => {
             setLoading(true);
-            const response = await getAdmins();
+            const response = await getAdmins({keyword});
             if (response.success) {
                 setAdminList(response.data);
             }
@@ -34,7 +43,70 @@ const  Admin = () => {
         };
 
         fetchAdminList();
-    }, []);
+    }, [reload, keyword]);
+
+    const handleEdit = (item) => {
+        setFormData(item);
+        setImageUrl(item.image_url);
+        setDialogOpen(true);
+    }
+
+    const handleAddAdmin = async () => {
+        setDialogLoading(true);
+        if (!formData?.first_name || !formData?.last_name || !formData?.email || !formData?.gender || !formData?.role || !imageFile) {
+            toast.error("Please fill all fields");
+            setDialogLoading(false);
+            return;
+        }
+
+        const data = new FormData();
+        data.append("first_name", formData.first_name);
+        data.append("last_name", formData.last_name);
+        data.append("email", formData.email);
+        data.append("gender", formData.gender);
+        data.append("role", formData.role);
+        data.append("image_url", imageFile);
+        const response = await createAdmin(data);
+        if (response.success) {
+            setDialogOpen(false);
+            setFormData(null);
+            setImageFile(null);
+            setImageUrl(null);
+            setReload(!reload);
+            toast.success(response.message);
+        } else {
+            toast.error(response.message);
+        }
+        setDialogLoading(false);
+    }
+
+    const handleEditAdmin = async () => {
+        setDialogLoading(true);
+        const data = new FormData();
+        data.append("first_name", formData.first_name);
+        data.append("last_name", formData.last_name);
+        data.append("email", formData.email);
+        data.append("gender", formData.gender);
+        data.append("role", formData.role);
+        if (imageFile) {
+            data.append("image_url", imageFile);
+        } else if (imageUrl) {
+            data.append("image_url", imageUrl);
+        }
+
+        const response = await updateAdmin(formData.id, data);
+        if (response.success) {
+            setDialogOpen(false);
+            setFormData(null);
+            setImageFile(null);
+            setImageUrl(null);
+            setReload(!reload);
+            toast.success(response.message);
+        } else {
+            toast.error(response.message);
+        }
+        setDialogLoading(false);
+    }
 
     return (
         <>
@@ -43,8 +115,10 @@ const  Admin = () => {
                     type="text"
                     placeholder="Search"
                     className="w-full sm:w-[400px]"
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.target.value)}
                 />
-                <Button className="bg-primary cursor-pointer">
+                <Button className="bg-primary cursor-pointer" onClick={() => setDialogOpen(true)}>
                     <CopyPlus/>
                     Add New Admin
                 </Button>
@@ -153,7 +227,9 @@ const  Admin = () => {
                                                     <Tooltip>
                                                         <TooltipTrigger asChild>
                                                             <Button
-                                                                className="cursor-pointer bg-white text-black hover:bg-primary hover:text-white border">
+                                                                className="cursor-pointer bg-white text-black hover:bg-primary hover:text-white border"
+                                                                onClick={() => handleEdit(admin)}
+                                                            >
                                                                 <Pencil/>
                                                             </Button>
                                                         </TooltipTrigger>
@@ -220,6 +296,19 @@ const  Admin = () => {
                     )}
                 </>
             )}
+
+            <AddAdminDialog
+                open={dialogOpen}
+                setOpen={setDialogOpen}
+                formData={formData}
+                setFormData={setFormData}
+                setImageFile={setImageFile}
+                imageUrl={imageUrl}
+                setImageUrl={setImageUrl}
+                handleAddAdmin={handleAddAdmin}
+                handleEditAdmin={handleEditAdmin}
+                loading={dialogLoading}
+            />
         </>
     );
 }

@@ -41,6 +41,7 @@ const Shoes = () => {
         setDialogLoading(true);
         if (!formData?.name || !formData?.description || !formData?.price || !formData?.quantity || !formData?.category_id || !imageFile) {
             toast.error("Please fill all fields");
+            setDialogLoading(false);
             return;
         }
 
