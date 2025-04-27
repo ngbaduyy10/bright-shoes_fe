@@ -250,7 +250,7 @@ const Detail = () => {
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                             <div className="flex items-center gap-0.5">
-                                <StarRating rating={item?.rating}/>
+                                <StarRating rating={avgRating || 0}/>
                             </div>
                             <span className="text-muted-foreground">
                             {avgRating?.toFixed(1) || 0} ({reviews.length} reviews)
@@ -367,8 +367,12 @@ const Detail = () => {
                             placeholder="Write a review..."
                             className="h-[50px] md:text-md"
                         />
-                        <Button className="cursor-pointer" onClick={handleSubmitReview}>
-                            Submit
+                        <Button className="cursor-pointer" disabled={reviewLoading} onClick={handleSubmitReview}>
+                            {reviewLoading ? (
+                                <div className="animate-spin flex-center">
+                                    <LoaderCircle/>
+                                </div>
+                            ) : "Submit"}
                         </Button>
                     </div>
                 )}

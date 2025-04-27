@@ -47,7 +47,7 @@ function AdminHeader({setSidebarOpen}) {
                                 </AvatarFallback>
                             </Avatar>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent>
+                        <DropdownMenuContent className="translate-x-[-20px]">
                             <DropdownMenuLabel>Logged in as {user?.first_name} {user?.last_name}</DropdownMenuLabel>
                             <DropdownMenuSeparator/>
                             <DropdownMenuItem className="cursor-pointer">
