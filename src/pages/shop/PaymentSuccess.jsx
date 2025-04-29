@@ -1,15 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 
 function PaymentSuccess() {
     const navigate = useNavigate();
 
     return (
-        <Card className="p-10">
-            <CardHeader className="p-0">
-                <CardTitle className="text-4xl">Payment is successfully!</CardTitle>
-            </CardHeader>
+        <div className="flex-center flex-col gap-4 flex-1">
+            <div className="text-4xl font-bold">Payment is successfully!</div>
             <Button
                 className="cursor-pointer w-[200px]"
                 onClick={() => {
@@ -18,7 +15,7 @@ function PaymentSuccess() {
                 }}>
                 View Orders
             </Button>
-        </Card>
+        </div>
     );
 }
 

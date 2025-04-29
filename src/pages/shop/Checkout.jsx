@@ -73,21 +73,32 @@ const Checkout = () => {
 
     const handleOrder = async () => {
         setLoading(true);
-        const data = {
+        let data = {
             userId: user.id,
             address: selectedAddress,
             items: cartItems,
-            paymentMethod: "cod",
-            totalBill: discountPrice ? discountPrice : totalPrice,
+            paymentMethod: method,
+            totalBill: totalPrice,
+            discountBill: discountPrice,
         }
 
-        const response = await createOrder(data);
-        if (response.success) {
-            await dispatch(clearCartSlice(user.id));
-            navigate("/payment-success");
-            toast.success(response.message);
-        } else {
-            toast.error(response.message);
+        if (!selectedAddress) {
+            toast.error("Please select an address");
+            setLoading(false);
+            return;
+        }
+
+        if (method === 'cod') {
+            const response = await createOrder(data);
+            if (response.success) {
+                await dispatch(clearCartSlice(user.id));
+                navigate("/payment-success");
+                toast.success(response.message);
+            } else {
+                toast.error(response.message);
+            }
+        } else if (method === 'stripe') {
+            console.log(data);
         }
         setLoading(false);
     }
