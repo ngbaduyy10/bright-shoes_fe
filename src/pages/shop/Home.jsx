@@ -55,6 +55,8 @@ const Home = () => {
                                 onClick={() => navigate(`/detail/${slide.shoes_id}`)}
                                 whileHover={{scale: 1.03}}
                                 transition={{duration: 0.3}}
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
                             />
                         ))}
                     </div>
