@@ -18,6 +18,7 @@ import {orderCheck} from "@/services/order.service.js";
 import {Bookmark, LoaderCircle, StarIcon} from "lucide-react";
 import {addToWishlist, removeFromWishlist, wishlistCheck} from "@/services/wishlist.service.js";
 import {dayjsDay} from "@/utils/dayjsConfig.js";
+import {motion} from "framer-motion";
 
 const Detail = () => {
     const { shoesId } = useParams();
@@ -196,7 +197,12 @@ const Detail = () => {
                 </div>
             ) : (
                 <div className="flex flex-col lg:flex-row gap-8 py-12 container px-2">
-                    <div className="overflow-hidden rounded-lg w-full xl:w-2/5">
+                    <motion.div
+                        className="overflow-hidden rounded-lg w-full xl:w-2/5"
+                        initial={{scale: 0.95, opacity: 0}}
+                        animate={{scale: 1, opacity: 1}}
+                        transition={{duration: 0.5, delay: 0.2}}
+                    >
                         <img
                             src={item?.image_url}
                             alt={item?.name}
@@ -204,8 +210,13 @@ const Detail = () => {
                             height={600}
                             className="aspect-square w-full object-cover"
                         />
-                    </div>
-                    <div className="flex flex-col w-full xl:w-3/5">
+                    </motion.div>
+                    <motion.div
+                        className="flex flex-col w-full xl:w-3/5"
+                        initial={{x: 30, opacity: 0}}
+                        animate={{x: 0, opacity: 1}}
+                        transition={{duration: 0.6, delay: 0.3}}
+                    >
                         <div>
                             <div className="flex items-start justify-between">
                                 <h1 className="text-2xl font-extrabold text-black">{item?.name}</h1>
@@ -213,11 +224,25 @@ const Detail = () => {
                                     <TooltipProvider>
                                         <Tooltip>
                                             <TooltipTrigger>
-                                                <Bookmark
-                                                    size={30}
-                                                    className="cursor-pointer fill-black text-black"
-                                                    onClick={handleRemoveFromWishlist}
-                                                />
+                                                <motion.div
+                                                    whileHover={{
+                                                        scale: 1.1,
+                                                        rotate: 10,
+                                                    }}
+                                                    whileTap={{scale: 0.95}}
+                                                    transition={{
+                                                        type: "spring",
+                                                        stiffness: 300,
+                                                        damping: 20,
+                                                    }}
+                                                    className="cursor-pointer"
+                                                >
+                                                    <Bookmark
+                                                        size={30}
+                                                        className="cursor-pointer fill-black text-black"
+                                                        onClick={handleRemoveFromWishlist}
+                                                    />
+                                                </motion.div>
                                             </TooltipTrigger>
                                             <TooltipContent className="bg-primary">
                                                 <p>Remove from Wishlist</p>
@@ -228,11 +253,25 @@ const Detail = () => {
                                     <TooltipProvider>
                                         <Tooltip>
                                             <TooltipTrigger>
-                                                <Bookmark
-                                                    size={30}
+                                                <motion.div
+                                                    whileHover={{
+                                                        scale: 1.1,
+                                                        rotate: 10,
+                                                    }}
+                                                    whileTap={{scale: 0.95}}
+                                                    transition={{
+                                                        type: "spring",
+                                                        stiffness: 300,
+                                                        damping: 20,
+                                                    }}
                                                     className="cursor-pointer"
-                                                    onClick={handleAddToWishlist}
-                                                />
+                                                >
+                                                    <Bookmark
+                                                        size={30}
+                                                        className="cursor-pointer"
+                                                        onClick={handleAddToWishlist}
+                                                    />
+                                                </motion.div>
                                             </TooltipTrigger>
                                             <TooltipContent className="bg-primary">
                                                 <p>Add to Wishlist</p>
@@ -258,14 +297,17 @@ const Detail = () => {
                         </div>
                         <div className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-5 xl:grid-cols-7 gap-2 mt-2">
                             {item?.size.map((size) => (
-                                <div
+                                <motion.div
                                     key={size}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                     className={`flex-center px-1 py-2 border border-muted-foreground rounded-lg cursor-pointer hover:bg-black hover:text-white 
                                     ${selectedSize === size ? "bg-black text-white" : ""}`}
                                     onClick={() => setSelectedSize(size)}
                                 >
                                     US {size}
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                         <div className="mt-5 mb-5">
@@ -274,20 +316,27 @@ const Detail = () => {
                                     Out of Stock
                                 </Button>
                             ) : (
-                                <Button
-                                    className="w-full bg-primary text-md text-white cursor-pointer"
+                                <motion.button
+                                    className="w-full bg-primary text-md text-white cursor-pointer rounded-lg"
                                     disabled={loading}
                                     onClick={handleAddToCart}
+                                    whileHover={{scale: 1.01}}
+                                    whileTap={{scale: 0.97}}
+                                    transition={{type: "spring", stiffness: 250, damping: 20}}
                                 >
-                                    {loading ? (
-                                        <div className="animate-spin flex-center">
-                                            <LoaderCircle/>
-                                        </div>
-                                    ) : "Add to Cart"}
-                                </Button>
+                                    <Button disabled={loading} className="w-full cursor-pointer">
+                                        {loading ? (
+                                            <div className="animate-spin flex-center">
+                                                <LoaderCircle/>
+                                            </div>
+                                        ) : (
+                                            "Add to Cart"
+                                        )}
+                                    </Button>
+                                </motion.button>
                             )}
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             )}
             <Separator className="container px-2"/>
@@ -295,7 +344,7 @@ const Detail = () => {
                 <h2 className="text-2xl font-extrabold text-black mb-4">Reviews</h2>
                 <div className="flex flex-col gap-6">
                     {reviewLoading ? (
-                        Array.from({ length: 2 }).map((_, i) => (
+                        Array.from({length: 2 }).map((_, i) => (
                             <div className="flex gap-2 mb-6" key={i}>
                                 <Skeleton className="w-10 h-10 rounded-full" />
                                 <div className="flex flex-col gap-1 w-full">
@@ -312,7 +361,14 @@ const Detail = () => {
                         <>
                             {reviews.length > 0 ? (
                                 reviews.map((reviewItem, index) => (
-                                    <div className="flex gap-2" key={index}>
+                                    <motion.div
+                                        className="flex gap-2"
+                                        key={index}
+                                        initial={{opacity: 0, y: 20}}
+                                        whileInView={{opacity: 1, y: 0}}
+                                        viewport={{once: true}}
+                                        transition={{duration: 0.4, delay: index * 0.1}}
+                                    >
                                         {reviewItem.image_url ? (
                                             <div className="w-10 h-10">
                                                 <img
@@ -323,7 +379,8 @@ const Detail = () => {
                                             </div>
                                         ) : (
                                             <Avatar className="w-10 h-10">
-                                                <AvatarFallback className="font-extrabold text-xl bg-primary text-white">
+                                                <AvatarFallback
+                                                    className="font-extrabold text-xl bg-primary text-white">
                                                     {`${reviewItem?.first_name?.charAt(0)}`}
                                                 </AvatarFallback>
                                             </Avatar>
@@ -345,7 +402,7 @@ const Detail = () => {
                                                 {reviewItem.comment}
                                             </p>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))
                             ) : (
                                 <div className="text-lg text-gray-500">No Reviews. Be the first to review this
@@ -355,7 +412,13 @@ const Detail = () => {
                     )}
                 </div>
                 {isSignedIn && isBought && (
-                    <div className="mt-10 flex-col flex gap-2">
+                    <motion.div
+                        className="mt-10 flex-col flex gap-2"
+                        initial={{opacity: 0}}
+                        whileInView={{opacity: 1}}
+                        viewport={{once: true}}
+                        transition={{duration: 0.5, delay: 0.2}}
+                    >
                         <Label className="text-lg">Write a review</Label>
                         <div className="flex items-center gap-0.5">
                             <StarRating rating={rating} handleRatingChange={(value) => setRating(value)}/>
@@ -367,14 +430,28 @@ const Detail = () => {
                             placeholder="Write a review..."
                             className="h-[50px] md:text-md"
                         />
-                        <Button className="cursor-pointer" disabled={reviewLoading} onClick={handleSubmitReview}>
-                            {reviewLoading ? (
-                                <div className="animate-spin flex-center">
-                                    <LoaderCircle/>
-                                </div>
-                            ) : "Submit"}
-                        </Button>
-                    </div>
+                        <motion.button
+                            whileHover={{scale: 1.01}}
+                            whileTap={{scale: 0.97}}
+                            transition={{type: "spring", stiffness: 250, damping: 20}}
+                            className="w-full"
+                            disabled={reviewLoading}
+                        >
+                            <Button
+                                className="cursor-pointer w-full"
+                                disabled={reviewLoading}
+                                onClick={handleSubmitReview}
+                            >
+                                {reviewLoading ? (
+                                    <div className="animate-spin flex-center">
+                                        <LoaderCircle/>
+                                    </div>
+                                ) : (
+                                    "Submit"
+                                )}
+                            </Button>
+                        </motion.button>
+                    </motion.div>
                 )}
             </div>
         </div>

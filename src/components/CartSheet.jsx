@@ -7,6 +7,7 @@ import {useUser} from "@clerk/clerk-react";
 import CartItem from "@/components/CartItem.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import {useNavigate} from "react-router-dom";
+import { motion } from "framer-motion";
 
 const CartSheet = ({ open, setOpen }) => {
     const dispatch = useDispatch();
@@ -37,14 +38,18 @@ const CartSheet = ({ open, setOpen }) => {
                                 <span className="font-bold text-xl">${totalPrice.toFixed(1)}</span>
                             </div>
                         </div>
-                        <Button
-                            onClick={() => {
-                                setOpen(false);
-                                navigate('/checkout');
-                            }}
-                            className="w-full mt-2 cursor-pointer"
-                        >
-                            Checkout
+                        <Button asChild className="w-full mt-2 cursor-pointer">
+                            <motion.button
+                                whileHover={{ scale: 1.01 }}
+                                whileTap={{ scale: 0.97 }}
+                                transition={{ type: "spring", stiffness: 250, damping: 20 }}
+                                onClick={() => {
+                                    setOpen(false);
+                                    navigate('/checkout');
+                                }}
+                            >
+                                Checkout
+                            </motion.button>
                         </Button>
                     </div>
                 ) : (

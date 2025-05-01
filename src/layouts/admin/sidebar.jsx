@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet.jsx";
 import PropTypes from "prop-types";
 import {Input} from "@/components/ui/input.jsx";
+import {motion} from "framer-motion";
 
 const adminSidebarMenuItems = [
     {
@@ -69,23 +70,33 @@ function AdminSideBar({ open, setOpen }) {
                             <div className="py-2 w-full">
                                 <Input type="text" placeholder="Search..." className="border-0 bg-[#3D3350] h-[50px] px-4 placeholder:text-white" />
                             </div>
-                            {adminSidebarMenuItems.map((menuItem) => (
-                                <div
-                                    key={menuItem.id}
-                                    onClick={() => {
-                                        navigate(menuItem.path);
-                                        setOpen(false);
-                                    }}
-                                    className={`flex cursor-pointer text-md items-center gap-3 rounded-md py-3 px-4 w-full
-                                        ${location.pathname.includes(menuItem.id)
-                                        ? "bg-white text-primary"
-                                        : "text-white hover:bg-white hover:text-primary"
-                                    }`}
-                                >
-                                    {menuItem.icon}
-                                    <span>{menuItem.label}</span>
-                                </div>
-                            ))}
+                            {adminSidebarMenuItems.map((menuItem) => {
+                                const isActive = location.pathname.includes(menuItem.id);
+                                return (
+                                    <motion.div
+                                        key={menuItem.id}
+                                        onClick={() => {
+                                            navigate(menuItem.path);
+                                            setOpen(false);
+                                        }}
+                                        initial={false}
+                                        whileHover={{
+                                            scale: 1.03,
+                                            backgroundColor: isActive ? "#ffffff" : "#ffffff20",
+                                            color: isActive ? "black" : "#ffffff",
+                                        }}
+                                        animate={{
+                                            backgroundColor: isActive ? "#ffffff" : "transparent",
+                                            color: isActive ? "black" : "#ffffff",
+                                        }}
+                                        transition={{type: "spring", stiffness: 300, damping: 20}}
+                                        className="flex cursor-pointer text-md items-center gap-3 rounded-md py-3 px-4 w-full"
+                                    >
+                                        {menuItem.icon}
+                                        <span>{menuItem.label}</span>
+                                    </motion.div>
+                                )
+                            })}
                         </div>
                     </div>
                 </SheetContent>
@@ -97,22 +108,33 @@ function AdminSideBar({ open, setOpen }) {
                 </div>
                 <div className="flex flex-col items-start gap-1 mx-2">
                     <div className="py-2 w-full">
-                        <Input type="text" placeholder="Search..." className="border-0 bg-[#3D3350] h-[50px] px-4 placeholder:text-white"/>
+                        <Input type="text" placeholder="Search..."
+                               className="border-0 bg-[#3D3350] h-[50px] px-4 placeholder:text-white"/>
                     </div>
-                    {adminSidebarMenuItems.map((menuItem) => (
-                        <div
-                            key={menuItem.id}
-                            onClick={() => navigate(menuItem.path)}
-                            className={`flex cursor-pointer text-md items-center gap-3 rounded-md py-3 px-4 w-full
-                                        ${location.pathname.includes(menuItem.id)
-                                ? "bg-white text-primary"
-                                : "text-white hover:bg-white hover:text-primary"
-                            }`}
-                        >
-                            {menuItem.icon}
-                            <span>{menuItem.label}</span>
-                        </div>
-                    ))}
+                    {adminSidebarMenuItems.map((menuItem) => {
+                        const isActive = location.pathname.includes(menuItem.id);
+                        return (
+                            <motion.div
+                                key={menuItem.id}
+                                onClick={() => navigate(menuItem.path)}
+                                initial={false}
+                                whileHover={{
+                                    scale: 1.03,
+                                    backgroundColor: isActive ? "#ffffff" : "#ffffff20",
+                                    color: isActive ? "black" : "#ffffff",
+                                }}
+                                animate={{
+                                    backgroundColor: isActive ? "#ffffff" : "transparent",
+                                    color: isActive ? "black" : "#ffffff",
+                                }}
+                                transition={{type: "spring", stiffness: 300, damping: 20}}
+                                className="flex cursor-pointer text-md items-center gap-3 rounded-md py-3 px-4 w-full"
+                            >
+                                {menuItem.icon}
+                                <span>{menuItem.label}</span>
+                            </motion.div>
+                        )
+                    })}
                 </div>
             </aside>
         </>

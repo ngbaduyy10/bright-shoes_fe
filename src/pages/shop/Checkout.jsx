@@ -30,6 +30,7 @@ import {Card, CardContent} from "@/components/ui/card.jsx";
 import dayjs from "dayjs";
 import {convertDate} from "@/utils/dayjsConfig.js";
 import stripe_logo from "@/assets/stripe_logo.png";
+import { motion } from "framer-motion";
 
 const Checkout = () => {
     const { user } = useUser();
@@ -149,12 +150,20 @@ const Checkout = () => {
                                 </div>
                             </div>
                         </div>
-                        <Button className="w-full mt-2 cursor-pointer" onClick={handleOrder} disabled={loading}>
-                            {loading ? (
-                                <div className="animate-spin">
-                                    <LoaderCircle/>
-                                </div>
-                            ) : "Place Order"}
+                        <Button asChild className="w-full mt-2 cursor-pointer" disabled={loading}>
+                            <motion.button
+                                whileHover={{ scale: loading ? 1 : 1.01 }}
+                                whileTap={{ scale: loading ? 1 : 0.97 }}
+                                transition={{ type: "spring", stiffness: 250, damping: 20 }}
+                                onClick={handleOrder}
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <div className="animate-spin">
+                                        <LoaderCircle />
+                                    </div>
+                                ) : "Place Order"}
+                            </motion.button>
                         </Button>
                     </div>
 

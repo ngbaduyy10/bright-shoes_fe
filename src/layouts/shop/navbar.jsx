@@ -36,28 +36,7 @@ const ShopNavbar = () => {
                         Bright
                     </Link>
 
-                    {/*<div className="hidden md:flex items-center-start gap-5 mt-1">*/}
-                    {/*    <NavLink to="/" className="text-lg navbar-link text-foreground">*/}
-                    {/*        <p>HOME</p>*/}
-                    {/*        <hr className="w-1/2 border-foreground border hidden"/>*/}
-                    {/*    </NavLink>*/}
-                    {/*    <NavLink to="/collection" className="text-lg navbar-link text-foreground">*/}
-                    {/*        <p>COLLECTION</p>*/}
-                    {/*        <hr className="w-1/2 border-foreground border hidden"/>*/}
-                    {/*    </NavLink>*/}
-                    {/*    <NavLink to="/contact" className="text-lg font-medium navbar-link text-foreground">*/}
-                    {/*        <p>CONTACT</p>*/}
-                    {/*        <hr className="w-1/2 border-foreground border hidden"/>*/}
-                    {/*    </NavLink>*/}
-                    {/*    {isSignedIn && (*/}
-                    {/*        <NavLink to="/account" className="text-lg font-medium navbar-link text-foreground">*/}
-                    {/*            <p>ACCOUNT</p>*/}
-                    {/*            <hr className="w-1/2 border-foreground border hidden"/>*/}
-                    {/*        </NavLink>*/}
-                    {/*    )}*/}
-                    {/*</div>*/}
-
-                    <div className="hidden md:flex items-center-start gap-5 mt-1">
+                    <div className="hidden md:flex items-center-start gap-6 mt-1">
                         {[
                             {to: "/", label: "HOME"},
                             {to: "/collection", label: "COLLECTION"},
@@ -76,17 +55,23 @@ const ShopNavbar = () => {
                                             className="flex flex-col items-center"
                                             initial="rest"
                                             whileHover="hover"
-                                            animate={isActive ? "hover" : "rest"}
+                                            whileTap={{scale: 0.97}}
+                                            animate={isActive ? "active" : "rest"}
                                             variants={{
                                                 rest: {},
-                                                hover: {}
+                                                hover: {
+                                                    scale: 1.05,
+                                                    transition: {duration: 0.3}
+                                                },
+                                                active: {}
                                             }}
                                         >
                                             <p>{label}</p>
                                             <motion.hr
                                                 variants={{
                                                     rest: {scaleX: 0, opacity: 0},
-                                                    hover: {scaleX: 1, opacity: 1}
+                                                    hover: {scaleX: 1, opacity: 1},
+                                                    active: {scaleX: 1, opacity: 1}
                                                 }}
                                                 transition={{duration: 0.3}}
                                                 className="origin-center w-1/2 border border-foreground mt-1"
@@ -152,21 +137,32 @@ const ShopNavbar = () => {
                     </div>
 
                     <div className="hidden md:flex items-center gap-4">
-                        <div className="relative" onClick={() => setCartOpen(true)}>
+
+                        <motion.div
+                            className="relative cursor-pointer"
+                            onClick={() => setCartOpen(true)}
+                            whileHover={{scale: 1.1, rotate: -5}}
+                            whileTap={{scale: 0.95}}
+                            transition={{type: "spring", stiffness: 300, damping: 15}}
+                        >
                             <ShoppingCart size={26} className="cursor-pointer"/>
                             <span className="cart-quantity">
                                 {totalItems}
                             </span>
-                        </div>
+                        </motion.div>
                         {isLoaded ? (
-                            <>
+                            <motion.div
+                                whileHover={{scale: 1.05}}
+                                whileTap={{scale: 0.95}}
+                                transition={{type: "spring", stiffness: 250, damping: 20}}
+                            >
                                 {isSignedIn ? (
                                     <UserButton afterSignOutUrl="/login"/>
                                 ) : (
                                     <Button className="cursor-pointer" onClick={() => navigate("/login")}>Sign
                                         In</Button>
                                 )}
-                            </>
+                            </motion.div>
                         ) : (
                             <Skeleton className="w-[2.6rem] h-[2.6rem] rounded-full"/>
                         )}
