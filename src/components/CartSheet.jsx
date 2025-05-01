@@ -7,7 +7,7 @@ import {useUser} from "@clerk/clerk-react";
 import CartItem from "@/components/CartItem.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import {useNavigate} from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const CartSheet = ({ open, setOpen }) => {
     const dispatch = useDispatch();
@@ -30,7 +30,19 @@ const CartSheet = ({ open, setOpen }) => {
                 {cartItems && cartItems.length > 0 ? (
                     <div className="mx-3">
                         <div className="space-y-4">
-                            {cartItems.map((item) => <CartItem key={item.shoes_id} item={item} />)}
+                            <AnimatePresence>
+                                {cartItems.map((item) => (
+                                    <motion.div
+                                        key={item.shoes_id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -20 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <CartItem item={item} />
+                                    </motion.div>
+                                ))}
+                            </AnimatePresence>
                         </div>
                         <div className="mt-8 space-y-4">
                             <div className="flex justify-between">

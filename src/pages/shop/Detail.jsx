@@ -299,7 +299,7 @@ const Detail = () => {
                             {item?.size.map((size) => (
                                 <motion.div
                                     key={size}
-                                    whileHover={{ scale: 1.05 }}
+                                    whileHover={{ scale: 1.03 }}
                                     whileTap={{ scale: 0.95 }}
                                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                     className={`flex-center px-1 py-2 border border-muted-foreground rounded-lg cursor-pointer hover:bg-black hover:text-white 
@@ -317,7 +317,7 @@ const Detail = () => {
                                 </Button>
                             ) : (
                                 <motion.button
-                                    className="w-full bg-primary text-md text-white cursor-pointer rounded-lg"
+                                    className={`w-full bg-primary text-md text-white cursor-pointer rounded-lg ${loading ? "opacity-60 cursor-not-allowed" : ""}`}
                                     disabled={loading}
                                     onClick={handleAddToCart}
                                     whileHover={{scale: 1.01}}
