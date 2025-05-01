@@ -10,6 +10,7 @@ import {useEffect, useState} from "react";
 import CartSheet from "@/components/CartSheet.jsx";
 import { useDispatch } from "react-redux";
 import { getCartSlice } from "@/store/cartSlice";
+import { motion } from "framer-motion";
 
 const ShopNavbar = () => {
     const { isSignedIn, user, isLoaded } = useUser();
@@ -35,30 +36,70 @@ const ShopNavbar = () => {
                         Bright
                     </Link>
 
+                    {/*<div className="hidden md:flex items-center-start gap-5 mt-1">*/}
+                    {/*    <NavLink to="/" className="text-lg navbar-link text-foreground">*/}
+                    {/*        <p>HOME</p>*/}
+                    {/*        <hr className="w-1/2 border-foreground border hidden"/>*/}
+                    {/*    </NavLink>*/}
+                    {/*    <NavLink to="/collection" className="text-lg navbar-link text-foreground">*/}
+                    {/*        <p>COLLECTION</p>*/}
+                    {/*        <hr className="w-1/2 border-foreground border hidden"/>*/}
+                    {/*    </NavLink>*/}
+                    {/*    <NavLink to="/contact" className="text-lg font-medium navbar-link text-foreground">*/}
+                    {/*        <p>CONTACT</p>*/}
+                    {/*        <hr className="w-1/2 border-foreground border hidden"/>*/}
+                    {/*    </NavLink>*/}
+                    {/*    {isSignedIn && (*/}
+                    {/*        <NavLink to="/account" className="text-lg font-medium navbar-link text-foreground">*/}
+                    {/*            <p>ACCOUNT</p>*/}
+                    {/*            <hr className="w-1/2 border-foreground border hidden"/>*/}
+                    {/*        </NavLink>*/}
+                    {/*    )}*/}
+                    {/*</div>*/}
+
                     <div className="hidden md:flex items-center-start gap-5 mt-1">
-                        <NavLink to="/" className="text-lg navbar-link text-foreground">
-                            <p>HOME</p>
-                            <hr className="w-1/2 border-foreground border hidden"/>
-                        </NavLink>
-                        <NavLink to="/collection" className="text-lg navbar-link text-foreground">
-                            <p>COLLECTION</p>
-                            <hr className="w-1/2 border-foreground border hidden"/>
-                        </NavLink>
-                        <NavLink to="/contact" className="text-lg font-medium navbar-link text-foreground">
-                            <p>CONTACT</p>
-                            <hr className="w-1/2 border-foreground border hidden"/>
-                        </NavLink>
-                        {isSignedIn && (
-                            <NavLink to="/account" className="text-lg font-medium navbar-link text-foreground">
-                                <p>ACCOUNT</p>
-                                <hr className="w-1/2 border-foreground border hidden"/>
-                            </NavLink>
-                        )}
+                        {[
+                            {to: "/", label: "HOME"},
+                            {to: "/collection", label: "COLLECTION"},
+                            {to: "/contact", label: "CONTACT"},
+                            isSignedIn && {to: "/account", label: "ACCOUNT"}
+                        ]
+                            .filter(Boolean)
+                            .map(({to, label}) => (
+                                <NavLink
+                                    key={label}
+                                    to={to}
+                                    className="text-lg font-medium navbar-link text-foreground"
+                                >
+                                    {({isActive}) => (
+                                        <motion.div
+                                            className="flex flex-col items-center"
+                                            initial="rest"
+                                            whileHover="hover"
+                                            animate={isActive ? "hover" : "rest"}
+                                            variants={{
+                                                rest: {},
+                                                hover: {}
+                                            }}
+                                        >
+                                            <p>{label}</p>
+                                            <motion.hr
+                                                variants={{
+                                                    rest: {scaleX: 0, opacity: 0},
+                                                    hover: {scaleX: 1, opacity: 1}
+                                                }}
+                                                transition={{duration: 0.3}}
+                                                className="origin-center w-1/2 border border-foreground mt-1"
+                                            />
+                                        </motion.div>
+                                    )}
+                                </NavLink>
+                            ))}
                     </div>
 
                     <div className="flex items-center gap-4 md:hidden">
                         <div className="relative" onClick={() => setCartOpen(true)}>
-                            <ShoppingCart size={26} className="cursor-pointer" />
+                            <ShoppingCart size={26} className="cursor-pointer"/>
                             <span className="cart-quantity">
                                 {totalItems}
                             </span>
@@ -73,7 +114,7 @@ const ShopNavbar = () => {
                                 <div className="flex flex-col gap-1">
                                     {isSignedIn ? (
                                         <div className="m-4 flex items-center gap-2 font-bold text-lg">
-                                            <UserButton afterSignOutUrl="/login" />
+                                            <UserButton afterSignOutUrl="/login"/>
                                             {user.fullName}
                                         </div>
                                     ) : (
@@ -84,7 +125,8 @@ const ShopNavbar = () => {
                                         <House/>
                                         <Label className="text-lg font-medium cursor-pointer">Home</Label>
                                     </div>
-                                    <div className="navbar-sheet cursor-pointer" onClick={() => navigate("/collection")}>
+                                    <div className="navbar-sheet cursor-pointer"
+                                         onClick={() => navigate("/collection")}>
                                         <ShoppingBag/>
                                         <Label className="text-lg font-medium cursor-pointer">Collection</Label>
                                     </div>
@@ -93,7 +135,8 @@ const ShopNavbar = () => {
                                         <Label className="text-lg font-medium cursor-pointer">Contact</Label>
                                     </div>
                                     {isSignedIn && (
-                                        <div className="navbar-sheet cursor-pointer" onClick={() => navigate("/account")}>
+                                        <div className="navbar-sheet cursor-pointer"
+                                             onClick={() => navigate("/account")}>
                                             <MessageCirclePlus/>
                                             <Label className="text-lg font-medium cursor-pointer">Account</Label>
                                         </div>
@@ -118,13 +161,14 @@ const ShopNavbar = () => {
                         {isLoaded ? (
                             <>
                                 {isSignedIn ? (
-                                    <UserButton afterSignOutUrl="/login" />
+                                    <UserButton afterSignOutUrl="/login"/>
                                 ) : (
-                                    <Button className="cursor-pointer" onClick={() => navigate("/login")}>Sign In</Button>
+                                    <Button className="cursor-pointer" onClick={() => navigate("/login")}>Sign
+                                        In</Button>
                                 )}
                             </>
                         ) : (
-                            <Skeleton className="w-[2.6rem] h-[2.6rem] rounded-full" />
+                            <Skeleton className="w-[2.6rem] h-[2.6rem] rounded-full"/>
                         )}
                     </div>
                 </div>

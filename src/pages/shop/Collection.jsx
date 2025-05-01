@@ -13,7 +13,7 @@ import {
     capitalizeFirstLetter,
     sortOptions,
 } from "@/utils/index.js";
-import { ArrowUpDownIcon, RotateCcw } from "lucide-react";
+import { ArrowUpDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import ItemCard from "@/components/ItemCard.jsx";
 import {Input} from "@/components/ui/input.jsx";
@@ -79,13 +79,6 @@ const Collection = () => {
                                 <h3 className="text-sm font-semibold">
                                     CATEGORIES
                                 </h3>
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="h-[24px] w-[24px] cursor-pointer hover:bg-primary hover:text-white"
-                                >
-                                    <RotateCcw />
-                                </Button>
                             </div>
                             <div className="flex flex-col gap-2">
                                 {categoryList.map((category) => (
@@ -107,13 +100,6 @@ const Collection = () => {
                                 <h3 className="text-sm font-semibold">
                                     BRANDS
                                 </h3>
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="h-[24px] w-[24px] cursor-pointer hover:bg-primary hover:text-white"
-                                >
-                                    <RotateCcw />
-                                </Button>
                             </div>
                             <div className="flex flex-col gap-2">
                                 {brandOptions.map((option) => (

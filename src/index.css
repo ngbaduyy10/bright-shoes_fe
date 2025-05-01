@@ -153,13 +153,13 @@
 /*    font-family: "Sen", sans-serif;*/
 /*}*/
 
-.navbar-link.active hr {
-  display: block;
-}
+/*.navbar-link.active hr {*/
+/*  display: block;*/
+/*}*/
 
-.navbar-link:hover hr {
-  display: block;
-}
+/*.navbar-link:hover hr {*/
+/*  display: block;*/
+/*}*/
 
 .cl-avatarBox {
   width: 2.6rem;
