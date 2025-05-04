@@ -60,7 +60,7 @@ const ShopNavbar = () => {
                                             variants={{
                                                 rest: {},
                                                 hover: {
-                                                    scale: 1.05,
+                                                    scale: 1.03,
                                                     transition: {duration: 0.3}
                                                 },
                                                 active: {}
