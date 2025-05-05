@@ -31,12 +31,12 @@ const ShopNavbar = () => {
     return (
         <>
             <header className="navbar-header">
-                <div className="flex items-start justify-between px-4 py-5">
+                <div className="flex items-center justify-between px-4 py-5">
                     <Link to="/home" className="text-4xl font-extrabold">
                         Bright
                     </Link>
 
-                    <div className="hidden md:flex items-center-start gap-6 mt-1">
+                    <div className="hidden md:flex items-start gap-6">
                         {[
                             {to: "/", label: "HOME"},
                             {to: "/collection", label: "COLLECTION"},
@@ -48,7 +48,7 @@ const ShopNavbar = () => {
                                 <NavLink
                                     key={label}
                                     to={to}
-                                    className="text-lg font-medium navbar-link text-foreground"
+                                    className="text-xl font-medium navbar-link text-foreground"
                                 >
                                     {({isActive}) => (
                                         <motion.div
@@ -74,7 +74,7 @@ const ShopNavbar = () => {
                                                     active: {scaleX: 1, opacity: 1}
                                                 }}
                                                 transition={{duration: 0.3}}
-                                                className="origin-center w-1/2 border border-foreground mt-1"
+                                                className="origin-center w-1/2 border border-foreground"
                                             />
                                         </motion.div>
                                     )}
