@@ -21,6 +21,9 @@ import { getOrdersByUserId } from "@/services/order.service.js";
 import { dayjsDate } from "@/utils/dayjsConfig.js";
 import OrderDetail from "@/components/OrderDetail.jsx";
 import { getStatusColor } from "@/utils/index.js";
+import { motion } from "framer-motion";
+
+const MotionTableRow = motion(TableRow);
 
 const Order = () => {
     const { user } = useUser();
@@ -110,8 +113,20 @@ const Order = () => {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {orderList.map((order) => (
-                                            <TableRow key={order.id}>
+                                        {orderList.map((order, index) => (
+                                            <MotionTableRow
+                                                key={order.id}
+                                                variants={{
+                                                    hidden: { opacity: 0, y: -20 },
+                                                    visible: { opacity: 1, y: 0 },
+                                                }}
+                                                initial="hidden"
+                                                animate="visible"
+                                                transition={{
+                                                    duration: 0.5,
+                                                    delay: index * 0.1,
+                                                }}
+                                            >
                                                 <TableCell>
                                                     {order?.id}
                                                 </TableCell>
@@ -142,7 +157,7 @@ const Order = () => {
                                                         View Details
                                                     </Button>
                                                 </TableCell>
-                                            </TableRow>
+                                            </MotionTableRow>
                                         ))}
                                     </TableBody>
                                 </Table>

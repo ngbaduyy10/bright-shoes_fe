@@ -7,6 +7,7 @@ import {useUser} from "@clerk/clerk-react";
 import {addAddress, getAddress, editAddress, deleteAddress} from "@/services/address.service.js";
 import {toast} from "sonner";
 import AddressCard from "@/components/AddressCard.jsx";
+import {motion} from "framer-motion";
 
 const Address = () => {
     const { user } = useUser();
@@ -103,12 +104,23 @@ const Address = () => {
                             ) : (
                                 <div className="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-2">
                                     {addressList.map((address) => (
-                                        <AddressCard
+                                        <motion.div
                                             key={address.id}
-                                            address={address}
-                                            handleEdit={handleEditButton}
-                                            handleDelete={handleDeleteAddress}
-                                        />
+                                            variants={{
+                                                hidden: { opacity: 0, y: 20 },
+                                                visible: { opacity: 1, y: 0 },
+                                            }}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="hidden"
+                                            transition={{duration: 0.5}}
+                                        >
+                                            <AddressCard
+                                                address={address}
+                                                handleEdit={handleEditButton}
+                                                handleDelete={handleDeleteAddress}
+                                            />
+                                        </motion.div>
                                     ))}
                                 </div>
                             )}
