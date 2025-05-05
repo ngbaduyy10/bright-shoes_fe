@@ -41,7 +41,7 @@ const ShopNavbar = () => {
                             {to: "/", label: "HOME"},
                             {to: "/collection", label: "COLLECTION"},
                             {to: "/contact", label: "CONTACT"},
-                            isSignedIn && {to: "/account", label: "ACCOUNT"}
+                            {to: "/account", label: "ACCOUNT"}
                         ]
                             .filter(Boolean)
                             .map(({to, label}) => (
@@ -55,7 +55,7 @@ const ShopNavbar = () => {
                                             className="flex flex-col items-center"
                                             initial="rest"
                                             whileHover="hover"
-                                            whileTap={{scale: 0.97}}
+                                            whileTap={{scale: 0.98}}
                                             animate={isActive ? "active" : "rest"}
                                             variants={{
                                                 rest: {},
@@ -119,13 +119,11 @@ const ShopNavbar = () => {
                                         <Contact/>
                                         <Label className="text-lg font-medium cursor-pointer">Contact</Label>
                                     </div>
-                                    {isSignedIn && (
-                                        <div className="navbar-sheet cursor-pointer"
-                                             onClick={() => navigate("/account")}>
-                                            <MessageCirclePlus/>
-                                            <Label className="text-lg font-medium cursor-pointer">Account</Label>
-                                        </div>
-                                    )}
+                                    <div className="navbar-sheet cursor-pointer"
+                                         onClick={() => navigate("/account")}>
+                                        <MessageCirclePlus/>
+                                        <Label className="text-lg font-medium cursor-pointer">Account</Label>
+                                    </div>
 
                                     {!isSignedIn && (
                                         <Button className="mx-4 cursor-pointer" onClick={() => navigate("/login")}>Sign

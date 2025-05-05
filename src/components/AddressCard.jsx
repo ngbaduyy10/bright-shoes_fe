@@ -6,8 +6,8 @@ import {Button} from "@/components/ui/button.jsx";
 function AddressCard({ address, handleEdit, handleDelete, setSelectedAddress, active }) {
     return (
         <Card
-            className={`cursor-pointer py-0 gap-0 ${
-                active ? "border-red-900 border-[2px]" : "border-black"
+            className={`cursor-pointer py-0 gap-0 border-[2px] ${
+                active ? "border-primary" : ""
             }`}
         >
             <CardContent className="grid p-4 gap-4">
