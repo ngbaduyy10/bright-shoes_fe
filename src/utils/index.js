@@ -104,6 +104,8 @@ export const paymentToString = (paymentMethod) => {
     switch (paymentMethod) {
         case "stripe":
             return "Stripe";
+        case "vnpay":
+            return "VNPay";
         case "cod":
             return "Cash on Delivery";
         default:

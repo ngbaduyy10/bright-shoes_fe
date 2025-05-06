@@ -19,6 +19,7 @@ import Shoes from "@/pages/admin/Shoes.jsx";
 import NotFound from "@/pages/NotFound.jsx";
 import Discount from "@/pages/admin/Discount.jsx";
 import Feature from "@/pages/admin/Feature.jsx";
+import VNPayVerify from "@/pages/shop/VNPayVerify.jsx";
 
 const routes = [
     {
@@ -102,6 +103,10 @@ const routes = [
                 ]
             }
         ]
+    },
+    {
+      path: "/vnpay-verify",
+        element: <VNPayVerify />
     },
     {
         path: "/unauthorized",

@@ -30,6 +30,7 @@ import {Card, CardContent} from "@/components/ui/card.jsx";
 import dayjs from "dayjs";
 import {convertDate} from "@/utils/dayjsConfig.js";
 import stripe_logo from "@/assets/stripe_logo.png";
+import vnpay_logo from "@/assets/vnpay_logo.webp";
 import { motion } from "framer-motion";
 
 const Checkout = () => {
@@ -100,6 +101,11 @@ const Checkout = () => {
             }
         } else if (method === 'stripe') {
             console.log(data);
+        } else if (method === 'vnpay') {
+            const response = await createOrder(data);
+            if (response.success) {
+                window.location.href = response.url;
+            }
         }
         setLoading(false);
     }
@@ -137,24 +143,30 @@ const Checkout = () => {
                         <div className="flex flex-col gap-1">
                         <div className="text-xl font-semibold">Payment Method</div>
                             <div className="flex items-center gap-2">
+                                <div onClick={() => setMethod('vnpay')}
+                                     className="flex items-center gap-3 border py-4 px-3 cursor-pointer rounded-lg">
+                                    <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'vnpay' ? 'bg-green-400' : ''}`}></p>
+                                    <img className="h-5 mx-2" src={vnpay_logo} alt=""/>
+                                </div>
+
                                 <div onClick={() => setMethod('stripe')}
                                      className="flex items-center gap-3 border py-4 px-3 cursor-pointer rounded-lg">
                                     <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'stripe' ? 'bg-green-400' : ''}`}></p>
-                                    <img className="h-5 mx-4" src={stripe_logo} alt=""/>
+                                    <img className="h-5 mx-2" src={stripe_logo} alt=""/>
                                 </div>
 
                                 <div onClick={() => setMethod('cod')}
                                      className="flex items-center gap-3 border py-4 px-3 cursor-pointer rounded-lg">
                                     <p className={`min-w-3.5 h-3.5 border rounded-full ${method === 'cod' ? 'bg-green-400' : ''}`}></p>
-                                    <p className="text-gray-500 text-sm font-medium mx-4">CASH ON DELIVERY</p>
+                                    <p className="text-gray-500 text-sm font-medium mx-2">CASH ON DELIVERY</p>
                                 </div>
                             </div>
                         </div>
                         <Button asChild className="w-full mt-2 cursor-pointer" disabled={loading}>
                             <motion.button
-                                whileHover={{ scale: loading ? 1 : 1.01 }}
-                                whileTap={{ scale: loading ? 1 : 0.97 }}
-                                transition={{ type: "spring", stiffness: 250, damping: 20 }}
+                                whileHover={{scale: loading ? 1 : 1.01}}
+                                whileTap={{scale: loading ? 1 : 0.97}}
+                                transition={{type: "spring", stiffness: 250, damping: 20}}
                                 onClick={handleOrder}
                                 disabled={loading}
                             >

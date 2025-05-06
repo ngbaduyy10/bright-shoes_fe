@@ -14,6 +14,19 @@ export const createOrder = async (data) => {
     return response.data;
 }
 
+export const vnpayVerify = async (vnp_ResponseCode, vnp_TxnRef) => {
+    const response = await axios.get(
+        `${BASE_URL}/order/vnpay-verify`,
+        {
+            params: {
+                vnp_ResponseCode,
+                vnp_TxnRef
+            }
+        }
+    )
+    return response.data;
+}
+
 export const getOrdersByUserId = async (userId) => {
     const response = await axios.get(`${BASE_URL}/order/${userId}`);
     return response.data;
